@@ -1,0 +1,121 @@
+﻿@model MineBidz.Models.CreateFormCrushersViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Product Type (ie. Gold etc...)")
+                @Html.TextBox("DetailsInfo.ProductType", "", new { @style = "width:250px" })
+            </div>
+            <div>
+                @Html.Label("", "Production Target")
+                @Html.TextBox("DetailsInfo.ProductionTarget", "", new { @style = "width:250px" })
+                @Html.DropDownList("DetailsInfo.ProductionTargetUnit", new SelectList(Model.Repository.ListProductTargetUnit()))
+            </div>
+            <div>
+                @Html.Label("", "Metallurgical Test Work", new { @style = "width:180px" })
+                @Html.Label("", "Yes", new { @style = "float:left; width:20px" })
+                @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "Yes", new { @style = "float:left; width:35px" })
+                @Html.Label("", "No", new { @style = "float:left; width:20px; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "No", new { @style = "float:left; width:35px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Stationary", new { @style = "float:left;" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Stationary", new { @style = "float:left; width:35px" })
+                @Html.Label("", "Mobile", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Mobile", new { @style = "float:left; width:35px" })
+                @Html.Label("", "Skid", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Skid", new { @style = "float:left; width:35px" })
+                @Html.Label("", "Plant", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Plant", new { @style = "float:left; width:35px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Primary Crusher Type")
+                @Html.DropDownList("DetailsInfo.PrimaryCrusherType", new SelectList(Model.Repository.ListCrusherType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.PrimaryCrusherTypeOther", "", new { @style = "width:250px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Secondary Crusher Type")
+                @Html.DropDownList("DetailsInfo.SecondaryCrusherType", new SelectList(Model.Repository.ListCrusherType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.SecondaryCrusherTypeOther", "", new { @style = "width:250px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Tertiary Crusher Type")
+                @Html.DropDownList("DetailsInfo.TertiaryCrusherType", new SelectList(Model.Repository.ListCrusherType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.TertiaryCrusherTypeOther", "", new { @style = "width:250px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Circuit Type")
+                @Html.DropDownList("DetailsInfo.CircuitType", new SelectList(Model.Repository.ListCircuitType()))
+            </div>
+            <div>
+                @Html.Label("", "Feed 80% passing Expected (mm)")
+                @Html.TextBox("DetailsInfo.Feed80PercentPassingExpected")
+            </div>
+            <div>
+                @Html.Label("", "Product 80% passing Expected (mm)")
+                @Html.TextBox("DetailsInfo.Product80PercentPassingExpected")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Known Size of Primary Crusher Required")
+                @Html.TextBox("DetailsInfo.KnownSizeOfPrimaryCrusherRequired")
+            </div>
+            <div>
+                @Html.Label("", "Known Size of Secondary Crusher Required")
+                @Html.TextBox("DetailsInfo.KnownSizeOfSecondaryCrusherRequired")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Known Size of Tertiary Crusher Required")
+                @Html.TextBox("DetailsInfo.KnownSizeOfTertiaryCrusherRequired")
+            </div>
+            <div>
+                @Html.Label("", "Product Target")
+                @Html.TextBox("DetailsInfo.ProductTarget", "", new { @style = "width:250px" })
+                @Html.DropDownList("DetailsInfo.ProductTargetUnit", new SelectList(Model.Repository.ListProductTargetUnit()))
+            </div>
+        </div>
+        @{Html.RenderPartial("PartialCreateMotor");}
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

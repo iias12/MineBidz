@@ -1,0 +1,21 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+<div class="createForm" style="height:75px">
+    <div>
+        @Html.Label("", "Description:")
+    </div>
+    <div>
+        @Html.Label("", Model.Description, new { @style = "color:#000; margin-left:5px" })
+    </div>
+</div>
+<div class="createForm">
+    <div>
+        @if (!String.IsNullOrEmpty(Model.DocumentInfo))
+        {
+            <a href="@Url.Content(String.Format("~/Documents/{0}", Model.DocumentInfo))"  target="_blank">Uploaded Document</a>
+        }
+        else
+        {
+            @Html.Label("", "No Document Provided", new { @style = "color:#000" })
+        }
+    </div>
+</div>

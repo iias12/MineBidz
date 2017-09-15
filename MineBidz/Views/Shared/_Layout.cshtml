@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body style="margin: 0 auto; width: 1260px">
+    <header>
+        <div style="margin: 0 auto; padding-top: 20px;">
+            <nav>
+                @*{WebSecurity.InitializeDatabaseConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString, "UserProfile", "UserId", "UserName", false);}*@
+                @*if (WebSecurity.IsAuthenticated && WebSecurity.CurrentUserId == 6) //Roles.IsUserInRole("Admin"))*@
+                @{Domain.Repository repository = new Domain.Repository(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);}
+
+                @*if (WebSecurity.IsAuthenticated && repository.IsUserInRole(WebSecurity.CurrentUserId,"Admin"))*@
+                @*if(true)
+                 @if (WebSecurity.IsAuthenticated && Roles.IsUserInRole("Admin"))
+
+                *@
+
+                @if (WebSecurity.IsAuthenticated && WebSecurity.CurrentUserId == 6)
+                {
+                    <ul id="menu" style="text-align: center">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Requests", "Index", "Admin")</li>
+                        <li>@Html.ActionLink("Bids", "Index", "Bids")</li>
+                        <li>@Html.ActionLink("Packages", "Packages", "Admin")</li>
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+                }
+                else
+                {
+                    <ul id="menu" style="text-align: center">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Services", "Services", "Home")</li>
+                        <li>@Html.ActionLink("About Us", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                        @Html.Partial("_LoginPartial")
+                        <li id="bid" style='height: 30px; width:208px; padding-right: 28px; padding-left: 18px; background: url(@Url.Content("~/Images/Layout/post-a-bid-background.png")) no-repeat'>@Html.ActionLink("Post a Bid Request", "Forms", "Home")</li>
+                    </ul>
+@*}*@
+                }
+            </nav>
+        </div>
+        <div id="logo" style='height: 120px; margin: 0 auto; background: url("../Images/logo-title.png")'>
+        </div>
+    </header>
+    <div id="innerBody" style="margin: 0 auto;">
+        @RenderSection("featured", required: false)
+        <div id="ad-left" style='height: 1000px; width: 183px; float: left; background: url(@Url.Content("~/Images/Layout/side-ad-left-empty.png"))'>
+            <div id="ad-left-top-1" style='height: 172px; width: 173px; margin-left: 1px;'>
+                <a href="http://www.tegaindustries.com/" target="_blank">
+                    <img src="/Images/Ad/tega-banner-1.jpg"></a>
+            </div>
+            <div id="ad-left-top-2" style='height: 172px; width: 173px; margin-left:1px; margin-top:10px; background: url(@Url.Content("~/Images/Ad/ore-pros.gif")) no-repeat'></div>
+            <div id="ad-left-top-3" style='height: 172px; width: 173px; margin-left:1px; margin-top:10px; background: url(@Url.Content("~/Images/Ad/hmr-logo-1.jpg")) no-repeat'></div>
+            <div id="ad-left-top-4" style='height: 172px; width: 173px; margin-left: 1px; margin-top: 10px;'>
+                <a href="http://www.mincocorp.ca/" target="_blank">
+                    <img src="/Images/Ad/minco-banner-1.jpg"></a>
+            </div>
+            <div id="ad-left-top-5" style='height: 172px; width: 173px; margin-left: 1px; margin-top: 10px;'>
+                <a href="http://www.solomonresources.ca/" target="_blank">
+                    <img src="/Images/Ad/solomon-resources-1.jpg"></a>
+            </div>
+        </div>
+        <section style="float: left; width: 880px">
+            @RenderBody()
+        </section>
+        <div style='height: 1000px; width: 183px; float: left;background: #f5f7f6 url(@Url.Content("~/Images/Layout/side-ad-right-empty.png")) repeat-y'>
+            <div id="ad-left-top-0" style='height: 172px; width: 173px; margin-left: 10px;'>
+                <a href="http://www.seprosystems.com/" target="_blank">
+                    <img src="/Images/Ad/sepro-minral-systems.gif"></a>
+            </div>
+            <div  style='height: 97px;width : 183px; margin-top:10px; background: url(@Url.Content("~/Images/Ad/right-ad-top.jpg"))'></div>
+            <div style='height: 172px; width: 183px; padding-left: 10px;'>
+                <a href="http://www.scotiacorp.com/" target="_blank">
+                    <img src="../../images/Ad/sion-logo.jpg"></a>
+            </div>
+            <div  style='height: 172px;width : 173px; margin-left: 10px; margin-top:10px; background: url(@Url.Content("~/Images/Ad/right-ad-bottom.jpg")) no-repeat'></div>
+            <div style='height: 172px; width: 183px; margin-top: 10px; padding-left: 10px;'>
+                <a href="http://www.ghimac.ca/" target="_blank">
+                    <img src="../../images/Ad/ghimc-banner-1.jpg"></a>
+            </div>
+            <div style='height: 172px; width: 173px; margin-top: 10px; padding-left: 10px;'>
+                <a href="http://www.iias.com/" target="_blank">
+                    <img src="@Url.Content("~/Images/Ad/internet-advertising-banner-ad-2.jpg")"></a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="content-wrapper">
+            <div id="bottom-menu" style="padding-top: 20px">
+                <div id="bottom-menu-1" style="float: left; width: 250px">
+                    <div>@Html.ActionLink("Home", "Index", "Home")</div>
+                    <div>@Html.ActionLink("Services", "Services", "Home")</div>
+                    <div>@Html.ActionLink("About Us", "About", "Home")</div>
+                    <div>@Html.ActionLink("Contact Us", "Contact", "Home")</div>
+                </div>
+                <div id="bottom-menu-2" style="float: left; width: 250px">
+                    <div><a href="@Url.Content("~/Images/PDF/Privacy Policy REV1.pdf")" target="_blank">Privacy Policy</a></div>
+                    <div><a href="@Url.Content("~/Images/PDF/Terms of Service for Users REV1.pdf")" target="_blank">Terms of Use</a></div>
+
+                </div>
+                <div id="bottom-text" style="float: left; width: 400px">
+                    <div>Welcome to Mine Bidz</div>
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div class="float-left">
+                <p>Mine Bidz &copy; @DateTime.Now.Year</p>
+            </div>
+            <div style="float: right">
+                <p><a href="http://www.iias.com/">Site by Internet Advertising</a></p>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.Dewatering detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.Dewatering>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Dewatering Type: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.DewateringType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.DewateringTypeOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Compacted Bulk Density of Dry Solids (SG): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.CompactedBulkDensityofDrySolidsSG, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specific Gravity of Liquid (t/m3): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SpecificGravityOfLiquidTM3, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "% Dry Solid by Weight in Slurry: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.PercentDrySolidByWeightInSlurry, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Total Weight of Dry Solids Per Day: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.TotalWeightOfDrySolidsPerDay, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.TotalWeightOfDrySolidsPerDayUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "% Dry Solid by Weight in Cake: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.PercentDrySolidByWeightInCake, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Total Cycle Time (If Pressure Filter) (min.): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.TotalCycleTimeIfPressureFilterMin, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Daily Availability (% 24hr day): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.DailyAvailabilityPercent24HrDay, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Number of Units Required (Ea.): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.NumberOfUnitsRequiredEa, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Feed 80% Passing Expected (mm): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Feed80PercentPassingExpectedMM, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayMotorIncluded", detailsModel.MotorIncluded);}
+    @{Html.RenderPartial("PartialDisplayMotor", detailsModel.Motor);}
+    @{Html.RenderPartial("PartialDisplayCommon");}
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

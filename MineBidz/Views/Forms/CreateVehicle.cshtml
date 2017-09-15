@@ -1,0 +1,82 @@
+﻿@model MineBidz.Models.CreateFormVehicleViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        @Html.ValidationSummary()
+
+        <div>
+            @{Html.RenderPartial("PartialFormCommonInfo");}
+        </div>
+
+        <fieldset>
+            <legend>@Model.FormTitle</legend>
+            <div class="createForm">
+                <div>
+                    @Html.Label("", "Type")
+                    @Html.DropDownList("DetailsInfo.Type", new SelectList(new List<string>() { "", "Pick-up", "Tractor", "RTV", "Van", "Service Truck", "Ambulance", "Fork Lift", "Other" }))
+                </div>
+                <div>
+                    @Html.Label("", "Specify if 'Other'")
+                    @Html.TextBox("DetailsInfo.TypeOther")
+                </div>
+                <div>
+                    @Html.Label("", "Hours No Greater Then")
+                    @Html.TextBox("DetailsInfo.HoursNoGreaterThen")
+                </div>
+                <div>
+                    @Html.Label("", "No Miles Greater Than")
+                    @Html.TextBox("DetailsInfo.NoMilesGreaterThan")
+                </div>
+                <div>
+                    @Html.Label("", "Drive")
+                    @Html.DropDownList("DetailsInfo.Drive", new SelectList(new List<string> { "", "2X4", "4X4", "6X6", "Other" }))
+                </div>
+                <div>
+                    @Html.Label("", "Specify if 'Other'")
+                    @Html.TextBox("DetailsInfo.DriveOther")
+                </div>
+            </div>
+            <div class="createForm">
+                <div>
+                    @Html.Label("", "Cab (If Applicable)")
+                    @Html.DropDownList("DetailsInfo.Cab", new SelectList(new List<string> { "", "Single", "Extended", "Crew", "Quad", "Other" }))
+                </div>
+                <div>
+                    @Html.Label("", "Specify if 'Other'")
+                    @Html.TextBox("DetailsInfo.CabOther")
+                </div>
+                <div>
+                    @Html.Label("", "Size")
+                    @Html.DropDownList("DetailsInfo.Size", new SelectList(new List<string> { "", "Half Ton", "3/4 Ton", "1 Ton", "5 Ton", "Other" }))
+                </div>
+                <div>
+                    @Html.Label("", "Specify if 'Other'")
+                    @Html.TextBox("DetailsInfo.SizeOther")
+                </div>
+                <div>
+                    @Html.Label("", "Accessories")
+                    @Html.DropDownList("DetailsInfo.Accessories", new SelectList(new List<string> { "", "Forks", "Bucket", "Basket", "Other" }))
+                </div>
+                <div>
+                    @Html.Label("", "Specify if 'Other'")
+                    @Html.TextBox("DetailsInfo.AccessoriesOther")
+                </div>
+                <div>
+                    @Html.Label("", "Quantity (each)")
+                    @Html.TextBox("DetailsInfo.Quantity")
+                </div>
+            </div>
+        </fieldset>
+
+        <input type="submit" value="Submit" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

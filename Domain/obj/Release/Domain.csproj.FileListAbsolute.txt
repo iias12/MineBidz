@@ -1,0 +1,4 @@
+C:\Development\MineBidz\Domain\bin\Release\Domain.dll
+C:\Development\MineBidz\Domain\bin\Release\Domain.pdb
+C:\Development\MineBidz\Domain\obj\Release\Domain.dll
+C:\Development\MineBidz\Domain\obj\Release\Domain.pdb

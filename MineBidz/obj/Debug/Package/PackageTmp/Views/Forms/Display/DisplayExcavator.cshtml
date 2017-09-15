@@ -1,0 +1,57 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.Excavator detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.Excavator>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity (Each): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Quantity, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Excavator Type: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ExcavatorType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ExcavatorTypeOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Size Class (Metric Ton): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SizeClassMetricTon, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SizeClassMetricTonOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Bucket Capacity (yd3): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.BucketCapacityYd3, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Recommended Power: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.RecommendedPower, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.RecommendedPowerUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.RecommendedPowerUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Hours No Greater Than (hrs): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.HoursNoGreaterThanHrs, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayCommon");}
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

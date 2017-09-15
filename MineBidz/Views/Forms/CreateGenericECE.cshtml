@@ -1,0 +1,38 @@
+﻿@model MineBidz.Models.CreateFormGenericECEViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.FormName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Quantity (Each)")
+                @Html.TextBox("DetailsInfo.QuantityEach")
+            </div>
+            <div>
+                @Html.Label("", "Site Visit Required", new { @style = "width:180px" })
+                @Html.Label("", "Yes", new { @style = "float:left; width:20px" })
+                @Html.RadioButton("DetailsInfo.VisitSiteRequired", "Yes", new { @style = "float:left; width:35px" })
+                @Html.Label("", "No", new { @style = "float:left; width:20px; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.VisitSiteRequired", "No", new { @style = "float:left; width:35px" })
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

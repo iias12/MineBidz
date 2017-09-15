@@ -1,0 +1,52 @@
+﻿@model MineBidz.Models.CreateFormOtherConsumablesViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Quantity")
+                @Html.TextBox("DetailsInfo.Quantity")
+                @Html.DropDownList("DetailsInfo.QuantityUnit", new SelectList(Model.Repository.ListFilterUnit()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.QuantityUnitOther")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Diameter")
+                @Html.TextBox("DetailsInfo.Diameter")
+                @Html.DropDownList("DetailsInfo.DiameterUnit", new SelectList(Model.Repository.ListUnitDiameter()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.DiameterUnitOther")
+            </div>
+            <div>
+                @Html.Label("", "Size")
+                @Html.TextBox("DetailsInfo.Size")
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,159 @@
+﻿@model MineBidz.Models.CreateFormPumpViewModel
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        <div class="createForm">
+            <div>
+                @Html.Label("DetailsInfo.SGSpecificGravity", "SG Specific Gravity")
+                @Html.TextBox("DetailsInfo.SGSpecificGravity", "", new { @style = "width:150px" })
+            </div>
+            <div>
+                @Html.Label("", "Product Type (ie. Gold etc...)")
+                @Html.TextBox("DetailsInfo.ProductType", "", new { @style = "width:250px" })
+            </div>
+            <div>
+                @Html.Label("DetailsInfo.ProductionTargetNumber", "Production Target")
+                @Html.TextBox("DetailsInfo.ProductionTargetNumber", "", new { @style = "width:150px" })
+                @Html.DropDownList("DetailsInfo.ProductionTargetUnit", new SelectList(new List<string>() { "", "TPH", "MTPH" }))
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Metallurgical Test Work", new { @style = "width:180px" })
+                @Html.Label("", "Yes", new { @style = "float:left; width:20px" })
+                @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", true, new { @style = "float:left; width:35px" })
+                @Html.Label("", "No", new { @style = "float:left; width:20px; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", false, new { @style = "float:left; width:35px" })
+            </div>
+            <div>
+                @Html.Label("", "Type of Pump")
+                @Html.DropDownList("DetailsInfo.PumpType", new SelectList(Model.Repository.ListPumpType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.OtherInfo")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Operating Conditions")
+                @Html.TextBox("DetailsInfo.OperatingConditions", "", new { @style = "width:150px" })
+            </div>
+            <div>
+                @Html.Label("", "Type of Fluid")
+                @Html.TextBox("DetailsInfo.FluidType")
+            </div>
+            <div>
+                @Html.Label("", "Max Solid Size (mm)")
+                @Html.TextBox("DetailsInfo.MaxSolidSize")
+            </div>
+            <div>
+                @Html.Label("", "% Solids")
+                @Html.TextBox("DetailsInfo.SolidsPercent")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Fluid  pH")
+                @Html.TextBox("DetailsInfo.FluidPH")
+            </div>
+            <div>
+                @Html.Label("", "Temperature")
+                @Html.TextBox("DetailsInfo.Temerature")
+                @Html.DropDownList("DetailsInfo.TemperatureUnit", new SelectList(new List<string> { "", "F", "C" }))
+            </div>
+            <div>
+                @Html.Label("", "Flow Rate (GPM)")
+                @Html.TextBox("DetailsInfo.FlowRateGPM")
+            </div>
+            <div>
+                @Html.Label("", "Motor Included in Quote")
+                @Html.Label("", "Yes", new { @style = "float:left; width:25px" })
+                @Html.RadioButton("DetailsInfo.MotorIncluded", true, new { @style = "float:left; width:35px" })
+                @Html.Label("", "No", new { @style = "float:left; width:25px; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.MotorIncluded", false, new { @style = "float:left; width:35px" })
+            </div>
+            <div>
+                @Html.Label("", "Motor Voltage")
+                @Html.TextBox("DetailsInfo.MotorVoltage")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Enclosure Type")
+                @Html.TextBox("DetailsInfo.EnclosureType")
+            </div>
+            <div>
+                @Html.Label("", "Phase")
+                @Html.TextBox("DetailsInfo.Phase")
+            </div>
+            <div>
+                @Html.Label("", "RPM Speed")
+                @Html.TextBox("DetailsInfo.RpmSpeed")
+            </div>
+            <div>
+                @Html.Label("", "Power HP")
+                @Html.TextBox("DetailsInfo.PowerHP")
+
+            </div>
+            <div>
+                @Html.Label("", "Project Elevation")
+                @Html.TextBox("DetailsInfo.ProjectElevation")
+                @Html.DropDownList("DetailsInfo.ProjectElevationUnit", new SelectList(new List<string> { "", "FT", "M" }))
+            </div>
+            <div>
+                @Html.Label("", "Hertz")
+                @Html.TextBox("DetailsInfo.Hertz")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Head (TDH)")
+                @Html.TextBox("DetailsInfo.HeadTDH")
+                @Html.DropDownList("DetailsInfo.HeadTDHUnit", new SelectList(new List<string> { "", "Feet", "Meters", "Other (Specify)" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.HeadTDHUnitOther")
+            </div>
+            <div>
+                @Html.Label("", "Suction Lift")
+                @Html.TextBox("DetailsInfo.SuctionLift")
+                @Html.DropDownList("DetailsInfo.SuctionLiftUnit", new SelectList(new List<string> { "", "Inches", "Meters", "Other (Specify)" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.SuctionLiftUnitOther")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Operating Time %")
+                @Html.TextBox("DetailsInfo.OperatingTimePercent")
+            </div>
+            <div>
+                @Html.Label("", "Materials")
+                @Html.DropDownList("DetailsInfo.SuctionLiftUnit", new SelectList(Model.Repository.ListMaterial()))
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

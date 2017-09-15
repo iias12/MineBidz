@@ -1,0 +1,48 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.Adr detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.Adr>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: Country - ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", "Location - ", new { @style = "float:left; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Product Type (ie. Gold etc...): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ProductType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Metallurgical Test Work: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MetallurgicalTestWork, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Flow GPM: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.FlowGPM, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Carbon Column Solution Feed Grade (Gold): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.CarbonColumnSolutionFeedGradeGold, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.CarbonColumnSolutionFeedGradeGoldUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Carbon Column Solution Feed Grade (Silver): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.CarbonColumnSolutionFeedGradeSilver, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.CarbonColumnSolutionFeedGradeSilverUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+
+    @{Html.RenderPartial("PartialDisplayMotorIncluded", detailsModel.MotorIncluded);}
+    @{Html.RenderPartial("PartialDisplayMotor", detailsModel.Motor);}
+    @{Html.RenderPartial("PartialDisplayTankScreenCommon", detailsModel.TankScreenCommon == null ? new Domain.Concrete.Common.TankScreenCommon() : detailsModel.TankScreenCommon);}
+    @{Html.RenderPartial("PartialDisplayCommon");}
+
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

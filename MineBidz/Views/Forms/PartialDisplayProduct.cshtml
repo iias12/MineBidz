@@ -1,0 +1,23 @@
+﻿@model Domain.Concrete.Common.Product
+
+<div class="createForm">
+    <div>
+        @Html.Label("", "SG Specific Gravity: ", new { @style = "float:left" })
+        @Html.Label("", Model.SGSpecificGravity, new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Product Type (ie. Gold etc...): ", new { @style = "float:left" })
+        @Html.Label("", Model.ProductType, new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Production Target: ", new { @style = "float:left" })
+        @Html.Label("", Model.ProductionTargetNumber, new { @style = "float:left; color:#000; margin-left:5px" })
+        @Html.Label("", Model.ProductionTargetUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+</div>
+<div class="createForm">
+    <div>
+        @Html.Label("", "Metallurgical Test Work: ", new { @style = "float:left" })
+        @Html.Label("", Model.MetallurgicalTestWork, new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+</div>

@@ -1,0 +1,147 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.Pump detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.Pump>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: Country - ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", "Location - ", new { @style = "float:left; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "SG Specific Gravity: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SGSpecificGravity.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("","Product Type (ie. Gold etc...):", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ProductType, new { @style = "float:left; color:#000; margin-left:5px" })
+
+        </div>
+        <div>
+            @Html.Label("", "Production Target: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ProductionTargetNumber.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.ProductionTargetUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Metallurgical Test Work: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MetallurgicalTestWork ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Type of Pump: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.PumpType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Other (Specify): ", detailsModel.OtherInfo)
+            @Html.Label("", detailsModel.OtherInfo, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Operating Conditions: ",new { @style = "float:left" })
+            @Html.Label("", detailsModel.OperatingConditions, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Type of Fluid: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.FluidType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Max Solid Size (mm): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MaxSolidSize.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "% Solids: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SolidsPercent.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Fluid  pH: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.FluidPH, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Temperature: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Temerature.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.TemperatureUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Flow Rate (GPM): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.FlowRateGPM.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Motor Included in Quote: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MotorIncluded ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Motor Voltage: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MotorVoltage.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Enclosure Type: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.EnclosureType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Phase: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Phase.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "RPM Speed: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.RpmSpeed.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+
+        </div>
+        <div>
+            @Html.Label("", "Power HP: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.PowerHP.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+
+        </div>
+        <div>
+            @Html.Label("", "Project Elevation: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ProjectElevation.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.ProjectElevationUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Hertz: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Hertz.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Head (TDH):", new { @style = "float:left" })
+            @Html.Label("", detailsModel.HeadTDH.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.HeadTDHUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other':",new { @style = "float:left" })
+            @Html.Label("", detailsModel.HeadTDHUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+
+        </div>
+        <div>
+            @Html.Label("", "Suction Lift:", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SuctionLift.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.SuctionLiftUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SuctionLiftUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Operating Time %: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.OperatingTimePercent.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Materials: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Materials, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayCommon");}
+
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

@@ -1,0 +1,21 @@
+@{
+    ViewBag.Title = "About";
+}
+<div style="padding-left:10px;">
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+<article>
+<p>Our Mine Bidz team has a combined 100+ years of working for vending companies and for mining companies.  We noticed a need to get better exposure for both mining companies and vending companies in the mining industry. We created minebidz.com to interface the mines with the vendors.</p>
+
+<p>Mine BidZ objective is to help the mining companies make connections with vendors and engineering firms whether the mining company is looking for quotes for projects, equipment, and/or find better prices on everyday consumables.  </p></article>
+<aside>
+    <ul>
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("About", "About", "Home")</li>
+        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+    </ul>
+</aside>
+</div>

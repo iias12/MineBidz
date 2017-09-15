@@ -1,0 +1,82 @@
+﻿@model MineBidz.Models.CreateFormFilterClothsViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        @{Html.RenderPartial("PartialCreateProduct");}
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Quantity")
+                @Html.TextBox("DetailsInfo.Quantity")
+            </div>
+            <div>
+                @Html.Label("", "Unit")
+                @Html.DropDownList("DetailsInfo.Unit", new SelectList(Model.Repository.ListFilterUnit()))
+            </div>
+            <div>
+                @Html.Label("", "Length")
+                @Html.DropDownList("DetailsInfo.Length", new SelectList(new List<string>() {"", "Feet","Meters","Miles","Kilometers","Other" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.LengthOther")
+            </div>
+            <div>
+                @Html.Label("", "Volume")
+                @Html.DropDownList("DetailsInfo.Volume", new SelectList(new List<string>() {"", "m3","ft3","US Gallon","Liters","Other" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.VolumeOther")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Weight")
+                @Html.DropDownList("DetailsInfo.Weight", new SelectList(new List<string>() {"", "Lbs","Kg","Ton","Other" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.WeightOther")
+            </div>
+            <div>
+                @Html.Label("", "Diameter")
+                @Html.DropDownList("DetailsInfo.Diameter", new SelectList(new List<string>() {"", "Inch","mm","Feet","Meter","Other" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.DiameterOther")
+            </div>
+            <div>
+                @Html.Label("", "Material")
+                @Html.DropDownList("DetailsInfo.Material", new SelectList(new List<string>() {"", "Steel","PVC","Polyurethane","Cast","Other" }))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.MaterialOther")
+            </div>
+            <div>
+                @Html.Label("", "Size (If Applicable)")
+                @Html.TextBox("DetailsInfo.Size")
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

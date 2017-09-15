@@ -1,0 +1,78 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.ProcessPlants detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.ProcessPlants>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", String.Format("Delivery: Country - {0}, Location - {1}", Model.Contry, Model.Location))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", String.Format("SG Specific Gravity: {0}", detailsModel.SGSpecificGravity))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Product Type (ie. Gold etc...): {0}", detailsModel.ProductType))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Production Target: {0} - {1}", detailsModel.ProductionTargetNumber, detailsModel.ProductionTargetUnit))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Metallurgical Test Work: {0}", detailsModel.MetallurgicalTestWork))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", String.Format(" {0}", detailsModel.SettingType))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Process Type: {0}", detailsModel.ProcessType))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Ore Type: {0}", detailsModel.OreType))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Specify if 'Other': {0}", detailsModel.OreTypeOther))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Work Index(kWh/t): {0}", detailsModel.WorkIndexkWht))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", String.Format("Process Condition: {0}", detailsModel.ProcessCondition))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Circuit Type: {0}", detailsModel.CircuitType))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Feed 80% Passing Expected (mm): {0}", detailsModel.Feed80PercentPassingExpectedMM))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Product 80% Passing Expected (mm): {0}", detailsModel.Product80PercentPassingExpectedMM))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", String.Format("Mill % of the Critical Speed: {0}", detailsModel.MillPercentOfCriticalSpeed))
+        </div>
+        <div>
+            @Html.Label("", String.Format("% Filling Degree Expected: {0}", detailsModel.PercentFillingDegreeExpected))
+        </div>
+        <div>
+            @Html.Label("", String.Format("Motor Included in Quote: {0}", detailsModel.MotorIncluded ? "Yes" : "No"))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Motor Included in Quote: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MotorIncluded? "Yes": "No", new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayMotor", detailsModel.Motor);}
+    @{Html.RenderPartial("PartialDisplayCommon");}
+
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

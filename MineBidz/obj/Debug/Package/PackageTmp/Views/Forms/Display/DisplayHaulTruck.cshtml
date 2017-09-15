@@ -1,0 +1,68 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.HaulTruck detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.HaulTruck>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity (Each): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Quantity.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Production Target: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.ProductionTarget, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.ProductionTargetUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Body Type: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.BodyType, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.BodyTypeOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Types: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Types, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Size Classes: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.SizeClasses, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Capacity (yd3): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.CapacityYd3, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Recommended Power: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.RecommendedPower, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.RecommendedPowerUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.RecommendedPowerUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Hours No Greater Than (hrs): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.HoursNoGreaterThanHrs, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Cab (If Applicable): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Cab, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayCommon");}
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

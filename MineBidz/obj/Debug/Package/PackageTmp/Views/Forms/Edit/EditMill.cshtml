@@ -1,0 +1,165 @@
+﻿@model MineBidz.Models.CreateFormMillViewModel 
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        @{Html.RenderPartial("PartialCreateProduct");}
+        @{Html.RenderPartial("PartialCreateMotor");}
+
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Stationary", new { @style = "float:left;" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Stationary", new { @style = "float:left; width:35px" })
+                @Html.Label("", "Mobile", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Mobile", new { @style = "float:left; width:35px" })
+                @Html.Label("", "Skid", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Skid", new { @style = "float:left; width:35px" })
+                @Html.Label("", "Plant", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "Plant", new { @style = "float:left; width:35px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Work Index (kWh)")
+                @Html.TextBoxFor(m=>m.DetailsInfo.WorkIndex)
+            </div>
+            <div>
+                @Html.Label("", "Primary Mill Type")
+                @Html.DropDownList("DetailsInfo.PrimaryMillType", new SelectList(Model.Repository.ListMillType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.PrimaryMillTypeOther")
+            </div>
+            <div>
+                @Html.Label("", "Secondary Mill Type")
+                @Html.DropDownList("DetailsInfo.SecondaryMillType", new SelectList(Model.Repository.ListMillType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.SecondaryMillTypeOther")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Tertiary Mill Type")
+                @Html.DropDownList("DetailsInfo.TertiaryMillType", new SelectList(Model.Repository.ListMillType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.TertiaryMillTypeOther")
+            </div>
+            <div>
+                @Html.Label("", "Process Type")
+                @Html.DropDownList("DetailsInfo.ProcessType", new SelectList(Model.Repository.ListMillProcessType()))
+            </div>
+            <div>
+                @Html.Label("", "Overflow Passing Target (micron)")
+                @Html.TextBox("DetailsInfo.OverflowPassingTarget")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Circuit Type")
+                @Html.DropDownList("DetailsInfo.CircuitType", new SelectList(Model.Repository.ListCircuitType()))
+            </div>
+            <div>
+                @Html.Label("", "Feed 80% passing Expected (mm)")
+                @Html.TextBox("DetailsInfo.Feed80PercentPassingExpected")
+            </div>
+            <div>
+                @Html.Label("", "Product 80% passing Expected (micron)")
+                @Html.TextBox("DetailsInfo.Product80PercentPassingExpected")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Liner Type")
+                @Html.DropDownList("DetailsInfo.LinerType", new SelectList(Model.Repository.ListLinerType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.LinerTypeOther")
+            </div>
+            <div>
+                @Html.Label("", "Liner average thickness expected (mm)")
+                @Html.TextBox("DetailsInfo.LinerAverageThicknessExpected")
+            </div>
+            <div>
+                @Html.Label("", "Product Target (tph)")
+                @Html.TextBox("DetailsInfo.ProductTarget")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Mill % of the Critical Speed")
+                @Html.TextBox("DetailsInfo.MillPercentOfTheCriticalSpeed")
+            </div>
+            <div>
+                @Html.Label("", "Media Charge (%)")
+                @Html.TextBox("DetailsInfo.MediaCharge")
+            </div>
+            <div>
+                @Html.Label("", "% Water in pulp expected")
+                @Html.TextBox("DetailsInfo.PercentWaterInPulpExpected")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Type of Outlet Expected")
+                @Html.DropDownList("DetailsInfo.TypeOfOutletExpected", new SelectList(Model.Repository.ListOutletType()))
+            </div>
+            <div>
+                @Html.Label("", "Other (Specify)")
+                @Html.TextBox("DetailsInfo.TypeOfOutletExpectedOther")
+            </div>
+            <div>
+                @Html.Label("", "Mill Trommel")
+                @Html.Label("", "Yes", new { @style = "float:left" })
+                @Html.RadioButton("DetailsInfo.MillTrommel", "Yes", new { @style = "float:left; width:35px" })
+                @Html.Label("", "No", new { @style = "float:left; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.Mobility", "No", new { @style = "float:left; width:35px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Known Size of Agglomerator?", new { @style = "padding-top:18px" })
+            </div>
+            <div>
+                @Html.Label("", "Diameter")
+                @Html.TextBox("DetailsInfo.KnownSizeOfAgglomeratorDiameter")
+                @Html.DropDownList("DetailsInfo.KnownSizeOfAgglomeratorDiameterUnit", new SelectList(Model.Repository.ListLengthMetersFeet()))
+            </div>
+            <div>
+                @Html.Label("", "X", new { @style = "padding-top:18px" })
+            </div>
+            <div>
+                @Html.Label("", "Length")
+                @Html.TextBox("DetailsInfo.KnownSizeOfAgglomeratorLength")
+                @Html.DropDownList("DetailsInfo.KnownSizeOfAgglomeratorLengthUnit", new SelectList(Model.Repository.ListLengthMetersFeet()))
+            </div>
+            <div>
+                @Html.Label("", "% Circulating Load")
+                @Html.TextBox("DetailsInfo.PercentCirculatingLoad")
+            </div>
+        </div>
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,53 @@
+﻿@model List<MineBidz.Models.RequestInfoListViewModel>
+
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Requests</h2>
+
+<div style="margin: 0 auto; overflow: auto">
+    <table style="width: 100%; border-bottom: solid thin; border-top: solid thin;">
+        <tr style="font-weight: 800">
+            <td>Condition</td>
+            <td>Bid Title</td>
+            <td>Category</td>
+            <td>Delivery Location</td>
+            <td>Bid ID</td>
+            <td>Date Posted</td>
+            <td>Bid End Date</td>
+            <td>Document</td>
+            <td>Approved</td>
+            <td>Actions</td>
+        </tr>
+        @foreach (MineBidz.Models.RequestInfoListViewModel f in Model)
+        {
+            <tr style="border-top: solid thin;">
+                <td>@f.Condition</td>
+                <td>@f.BidName</td>
+                <td>@Html.RouteLink(String.Format("{0}/{1}/{2}", f.Category, f.Subcategory, f.FormTitle), new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
+                <td>@Html.RouteLink(String.Format("{0}, {1}", f.Country, f.Location), new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
+                <td>@Html.RouteLink(f.RefNumber, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
+                <td>@Html.RouteLink(f.BidStart, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
+                <td>@Html.RouteLink(f.BidEnd, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
+                <td>
+                    @if (!String.IsNullOrEmpty(f.DocumentInfo))
+                    {
+                        <a href="@Url.Content(String.Format("~/Documents/{0}", f.DocumentInfo))"  target="_blank">Document</a>
+                    }
+                    else
+                    {
+                        <p>None</p>
+                    }
+                </td>
+                <td>@Html.CheckBox(String.Format("Approved_{0}", f.RequestInfoId), f.Approved, new { @disabled = "disabled" })</td>
+                <td>
+                    @Html.RouteLink(f.Approved?"Disapprove":"Approve", new { controller = "Admin", action = "Approve", requestId = f.RequestInfoId, approved=f.Approved })
+                    @Html.RouteLink("Delete", new { controller = "Admin", action = "Delete", requestId = f.RequestInfoId })
+                    @Html.RouteLink("Review", new { controller = "Forms", action = "Create", id = f.RequestInfoId })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
