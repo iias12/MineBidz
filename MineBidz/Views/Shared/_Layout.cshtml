@@ -4,11 +4,12 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-<body style="margin: 0 auto; width: 1260px">
+<body>
     <header>
         <div style="margin: 0 auto; padding-top: 20px;">
             <nav>
@@ -46,12 +47,12 @@
                 }
             </nav>
         </div>
-        <div id="logo" style='height: 120px; margin: 0 auto; background: url("../Images/logo-title.png")'>
+        <div id="logo" style='height: 120px; background: url("../Images/logo-title.png")'>
         </div>
     </header>
-    <div id="innerBody" style="margin: 0 auto;">
+    <div id="innerBody" class="w3-container">
         @RenderSection("featured", required: false)
-        <div id="ad-left" style='height: 1000px; width: 183px; float: left; background: url(@Url.Content("~/Images/Layout/side-ad-left-empty.png"))'>
+        <div id="ad-left" class="w3-hide-medium, w3-hide-small" style='height: 1000px; width: 183px; float: left; background: url(@Url.Content("~/Images/Layout/side-ad-left-empty.png"))'>
             <div id="ad-left-top-1" style='height: 172px; width: 173px; margin-left: 1px;'>
                 <a href="http://www.tegaindustries.com/" target="_blank">
                     <img src="/Images/Ad/tega-banner-1.jpg"></a>
@@ -70,7 +71,7 @@
         <section style="float: left; width: 880px">
             @RenderBody()
         </section>
-        <div style='height: 1000px; width: 183px; float: left;background: #f5f7f6 url(@Url.Content("~/Images/Layout/side-ad-right-empty.png")) repeat-y'>
+        <div class="w3-hide-medium, w3-hide-small" style='height: 1000px; width: 183px; float: left;background: #f5f7f6 url(@Url.Content("~/Images/Layout/side-ad-right-empty.png")) repeat-y'>
             <div id="ad-left-top-0" style='height: 172px; width: 173px; margin-left: 10px;'>
                 <a href="http://www.seprosystems.com/" target="_blank">
                     <img src="/Images/Ad/sepro-minral-systems.gif"></a>
