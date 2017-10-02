@@ -8,7 +8,8 @@
     </text>
 } else {
     
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink",  @class = "w3-container w3-button w3-hover-white w3-center"  })
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink",  @class = "w3-container w3-button w3-hover-white w3-center" 
+   })
     
 }
