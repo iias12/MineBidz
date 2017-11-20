@@ -15,6 +15,5 @@ namespace MineBidz.Models
         public bool UserIsAuthenicated { get; set; }
         public bool UserCanBid { get; set; }
         public string DocumentInfo { get; set; }
-        public string DetailsInfoJson { get; set; }
     }
 }

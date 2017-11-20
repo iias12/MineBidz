@@ -2,3 +2,8 @@ C:\Development\MineBidz\Domain\bin\Release\Domain.dll
 C:\Development\MineBidz\Domain\bin\Release\Domain.pdb
 C:\Development\MineBidz\Domain\obj\Release\Domain.dll
 C:\Development\MineBidz\Domain\obj\Release\Domain.pdb
+C:\GIT\MineBidz\Domain\bin\Release\Domain.dll
+C:\GIT\MineBidz\Domain\bin\Release\Domain.pdb
+C:\GIT\MineBidz\Domain\obj\Release\Domain.csprojResolveAssemblyReference.cache
+C:\GIT\MineBidz\Domain\obj\Release\Domain.dll
+C:\GIT\MineBidz\Domain\obj\Release\Domain.pdb

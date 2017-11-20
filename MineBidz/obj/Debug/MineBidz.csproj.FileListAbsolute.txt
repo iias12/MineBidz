@@ -43,6 +43,7 @@ C:\Development\MineBidz\MineBidz\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 C:\Development\MineBidz\MineBidz\obj\Debug\MineBidz.csprojResolveAssemblyReference.cache
 C:\Development\MineBidz\MineBidz\obj\Debug\MineBidz.dll
 C:\Development\MineBidz\MineBidz\obj\Debug\MineBidz.pdb
+C:\GIT\MineBidz\MineBidz\obj\Debug\MineBidz.csprojResolveAssemblyReference.cache
 C:\GIT\MineBidz\MineBidz\bin\MineBidz.dll
 C:\GIT\MineBidz\MineBidz\bin\MineBidz.pdb
 C:\GIT\MineBidz\MineBidz\bin\Antlr3.Runtime.dll
@@ -85,6 +86,5 @@ C:\GIT\MineBidz\MineBidz\bin\DotNetOpenAuth.OAuth.Consumer.xml
 C:\GIT\MineBidz\MineBidz\bin\DotNetOpenAuth.OAuth.xml
 C:\GIT\MineBidz\MineBidz\bin\DotNetOpenAuth.OpenId.xml
 C:\GIT\MineBidz\MineBidz\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
-C:\GIT\MineBidz\MineBidz\obj\Debug\MineBidz.csprojResolveAssemblyReference.cache
 C:\GIT\MineBidz\MineBidz\obj\Debug\MineBidz.dll
 C:\GIT\MineBidz\MineBidz\obj\Debug\MineBidz.pdb

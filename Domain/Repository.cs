@@ -37,7 +37,7 @@ namespace Domain
             }
         }
 
-        public List<Bid> ListBid(bool admin)
+        public IEnumerable<Bid> ListBid(bool admin)
         {
             List<Bid> list = new List<Bid>();
             string whereClause = String.Empty;
@@ -126,9 +126,9 @@ namespace Domain
         }
 
 
-        public List<RequestInfo> ListRequestInfo()
+        public IEnumerable<RequestInfo> ListRequestInfo()
         {
-            List<Condition> conditionList = ListCondition();
+            List<Condition> conditionList = ListCondition().ToList();
             List<RequestInfo> list = new List<RequestInfo>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -252,9 +252,9 @@ namespace Domain
             return list;
         }
 
-        public List<RequestInfo> ListRequestInfoAdmin()
+        public IEnumerable<RequestInfo> ListRequestInfoAdmin()
         {
-            List<Condition> conditionList = ListCondition();
+            List<Condition> conditionList = ListCondition().ToList();
             List<RequestInfo> list = new List<RequestInfo>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -385,7 +385,7 @@ namespace Domain
         }
 
 
-        public List<Condition> ListCondition()
+        public IEnumerable<Condition> ListCondition()
         {
             List<Condition> list = new List<Condition>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -436,7 +436,7 @@ namespace Domain
             return list;
         }
 
-        public List<Category> ListCategory()
+        public IEnumerable<Category> ListCategory()
         {
             List<Category> list = new List<Category>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -462,7 +462,7 @@ namespace Domain
             return list;
         }
 
-        public List<Subcategory> ListSubcategory()
+        public IEnumerable<Subcategory> ListSubcategory()
         {
             List<Subcategory> list = new List<Subcategory>();
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -488,7 +488,7 @@ namespace Domain
             return list.OrderBy(s=>s.Title).ToList();
         }
 
-        public List<RequestForm> ListForm()
+        public IEnumerable<RequestForm> GetAllRequestForms()
         {
             List<RequestForm> list = new List<RequestForm>();
 
@@ -518,7 +518,7 @@ namespace Domain
             return list;
         }
 
-        public List<RequestForm> ListForm(int categoryId)
+        public IEnumerable<RequestForm> GetRequestFormsByCategory(int categoryId)
         {
             List<RequestForm> list = new List<RequestForm>();
 
@@ -710,7 +710,6 @@ namespace Domain
             }
             return bid;
         }
-
 
         public RequestForm GetForm(string formId)
         {
@@ -1089,7 +1088,6 @@ namespace Domain
             command.ExecuteNonQuery();
         }
 
-
         public int SaveForm(RequestInfo request)
         {
             int companyContactId;
@@ -1248,6 +1246,40 @@ namespace Domain
         public IEnumerable<ProvinceState> ListProvincesStates(string countryCode)
         {
             return ListProvincesStates().Where(p => p.CountryCode == countryCode).OrderBy(c => c.ProvinceStateName).ToList();
+        }
+
+        public IEnumerable<RequestForm> GetRequestForms(int categoryId, int subcategoryId)
+        {
+            var requestForms = new List<RequestForm>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+                SqlParameter category_id = new SqlParameter("@category_id", categoryId); command.Parameters.Add(category_id);
+                SqlParameter subcategory_id = new SqlParameter("@subcategory_id", subcategoryId); command.Parameters.Add(subcategory_id);
+
+
+                command.CommandText =
+                @"SELECT DISTINCT rf.request_form_id, rf.title, rf.form_name, rf.class_name from request_form rf
+                INNER JOIN category_subcategory_request_form csrf ON rf.class_name = csrf.class_name
+                WHERE csrf.category_id = @category_id AND csrf.subcategory_id = @subcategory_id";
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    requestForms.Add(
+                    new RequestForm
+                    {
+                        Id = reader.GetInt32(0),
+                        Title = reader.GetString(1),
+                        FormName = reader.GetString(2),
+                        ClassName = reader.GetString(3)
+                    });
+                }
+            }
+            return requestForms;
         }
 
         public IEnumerable<ProvinceState> ListProvincesStates()

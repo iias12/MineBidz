@@ -25,7 +25,28 @@ namespace MineBidz.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            RequestForm form = new RequestForm();
+            RequestInfo requestInfo = new RequestInfo();
+
+            var countries = repository.ListCountries();
+            var provincesCompany = new List<ProvinceState>();
+            var provincesDelivery = new List<ProvinceState>();
+
+            var categories = repository.ListCategory();
+            var subcategories = repository.ListSubcategory();
+
+            ViewBag.Countries = new SelectList(countries, "CountryCode", "CountryName");
+            ViewBag.ProvincesCompany = new SelectList(provincesCompany, "ProvinceStateCode", "ProvinceStateName");
+            ViewBag.ProvincesDelivery = new SelectList(provincesDelivery, "ProvinceStateCode", "ProvinceStateName");
+            ViewBag.Categories = new SelectList(categories, "Id", "Title");
+
+            CreateFormViewModel model = new CreateFormViewModel();
+            SetEmptyModel(model);
+            model.Categories = new SelectList(categories, "Id", "Title");
+            model.Subcategories = new SelectList(subcategories, "Id", "Title");
+            model.RequestForms = new SelectList(new List<RequestForm>(), "ClassName", "Title");
+
+            return View(model);
         }
 
         //
@@ -435,8 +456,6 @@ namespace MineBidz.Controllers
             SetUserRights(model);
 
             return View(String.Format("Display/Display{0}", form.FormName), model);
-
-
         }
 
         //
@@ -575,6 +594,76 @@ namespace MineBidz.Controllers
         }
 
         [HttpPost]
+        public ActionResult Create(CreateFormViewModel model)
+        {
+            var requestForm = Request.Form;
+            var keys = requestForm.AllKeys.Where(x => x.StartsWith("DetailsInfo")).ToList();
+            var form = repository.GetForm(model.ClassName);
+
+            if (form.FormName == "Ventilation")
+            {
+                var myClass = MapForm<Ventilation>(requestForm);
+                string details = JsonHelper.JsonSerialize<Ventilation>(myClass);
+
+            }
+            //
+            return SaveRequest(null, "");
+        }
+
+        private T MapForm<T>(System.Collections.Specialized.NameValueCollection requestForm) where T : new()
+        {
+            var myClass = new T();
+            var hhh = myClass.GetType();
+            var props = hhh.GetProperties();
+            foreach (var prop in props)
+            {
+                var key = requestForm.AllKeys.FirstOrDefault(x => x.Contains(prop.Name));
+                if (key == null)
+                {
+                    continue;
+                }
+                var value = requestForm[key];
+                if (prop.PropertyType.Name == "Boolean")
+                {
+                    prop.SetValue(myClass, bool.Parse(value));
+                    continue;
+                }
+                if (prop.PropertyType.Name == "Int32")
+                {
+                    prop.SetValue(myClass,(value == null || value == String.Empty)? 0 : Int32.Parse(value));
+                    continue;
+                }
+                if (prop.PropertyType.Name == "Double")
+                {
+                    prop.SetValue(myClass, (value == null || value == String.Empty) ? 0D : Double.Parse(value));
+                    continue;
+                }
+
+                if (prop.PropertyType.Name == "Motor")
+                {
+                    var subClass = MapForm<Domain.Concrete.Common.Motor>(requestForm);
+                    prop.SetValue(myClass, subClass);
+                    continue;
+                }
+                if (prop.PropertyType.Name == "Product")
+                {
+                    var subClass = MapForm<Domain.Concrete.Common.Product>(requestForm);
+                    prop.SetValue(myClass, subClass);
+                    continue;
+                }
+                if (prop.PropertyType.Name == "TankScreenCommon")
+                {
+                    var subClass = MapForm<Domain.Concrete.Common.TankScreenCommon>(requestForm);
+                    prop.SetValue(myClass, subClass);
+                    continue;
+                }
+                prop.SetValue(myClass, value);
+            }
+            return myClass;
+        }
+
+
+        [HttpPost]
         public ActionResult CreateHaulTruck(CreateFormHaulTruckViewModel model)
         {
             string details = JsonHelper.JsonSerialize<HaulTruck>(model.DetailsInfo);
@@ -618,6 +707,15 @@ namespace MineBidz.Controllers
             model.FormTitle = form.Title;
             model.FormName = form.FormName;
         }
+
+        private void SetEmptyModel(CreateFormViewModel model)
+        {
+            model.CompanyInfo = new ContactInfo();
+            model.DeliveryInfo = new ContactInfo();
+            model.BidInfo = new BidInfo();
+            model.Repository = repository;
+        }
+
 
         //
         // POST: /Forms/Edit/5
@@ -669,6 +767,141 @@ namespace MineBidz.Controllers
             return Json(provincesStates, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetRequestForms(int categoryId, int subcategoryId)
+        {
+            var requests = repository.GetRequestForms(categoryId, subcategoryId);
+            return Json(requests, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult ShowForm(string className)
+        {
+
+            var requestForm = Request.Form;
+            var form = repository.GetForm(className);
+            //CreateFormScreenViewModel screenModel = new CreateFormScreenViewModel();
+            //screenModel.DetailsInfo = new Screen();
+            //SetEmptyModel(screenModel, 1, 1, "", form);
+            //return PartialView("Screen", screenModel);
+
+
+            switch (form.FormName)
+            {
+                case "Adr":
+                    var adrModel = new CreateFormAdrViewModel();
+                    adrModel.DetailsInfo = new Adr();
+                    SetEmptyModel(adrModel, 0, 0, className, form);
+                    return PartialView("ADR", adrModel);
+                case "Cip":
+                    var cipModel = new CreateFormCipViewModel();
+                    cipModel.DetailsInfo = new Cip();
+                    SetEmptyModel(cipModel, 0, 0, className, form);
+                    return PartialView("CIP", cipModel);
+                case "Classification":
+                    CreateFormClassificationViewModel classificationModel = new CreateFormClassificationViewModel();
+                    classificationModel.DetailsInfo = new Classification();
+                    SetEmptyModel(classificationModel, 1, 1, className, form);
+                    return PartialView("Classification", classificationModel);
+                case "Crushers":
+                    CreateFormCrushersViewModel crushersModel = new CreateFormCrushersViewModel();
+                    SetEmptyModel(crushersModel, 1, 1, className, form);
+                    return PartialView("Crushers", crushersModel);
+                case "Dewatering":
+                    CreateFormDewateringViewModel dewateringModel = new CreateFormDewateringViewModel();
+                    dewateringModel.DetailsInfo = new Dewatering();
+                    SetEmptyModel(dewateringModel, 1, 1, className, form);
+                    return PartialView("Dewatering", dewateringModel);
+                case "Excavator":
+                    CreateFormExcavatorViewModel excavatorModel = new CreateFormExcavatorViewModel();
+                    excavatorModel.DetailsInfo = new Excavator();
+                    SetEmptyModel(excavatorModel, 1, 1, className, form);
+                    return PartialView("Excavator", excavatorModel);
+                case "FilterCloths":
+                    CreateFormFilterClothsViewModel filterClothsModel = new CreateFormFilterClothsViewModel();
+                    filterClothsModel.DetailsInfo = new FilterCloths();
+                    SetEmptyModel(filterClothsModel, 1, 1, className, form);
+                    return PartialView("FilterCloths", filterClothsModel);
+                case "GenericECE":
+                    CreateFormGenericECEViewModel genericECEModel = new CreateFormGenericECEViewModel();
+                    genericECEModel.DetailsInfo = new GenericECE();
+                    SetEmptyModel(genericECEModel, 1, 1, className, form);
+                    return PartialView("GenericECE", genericECEModel);
+                case "GenericEngineering":
+                    CreateFormGenericEngineeringViewModel genericEngineeringModel = new CreateFormGenericEngineeringViewModel();
+                    genericEngineeringModel.DetailsInfo = new GenericEngineering();
+                    SetEmptyModel(genericEngineeringModel, 1, 1, className, form);
+                    return PartialView("GenericEngineering", genericEngineeringModel);
+                case "HaulTruck":
+                    CreateFormHaulTruckViewModel haulTruckModel = new CreateFormHaulTruckViewModel();
+                    haulTruckModel.DetailsInfo = new HaulTruck();
+                    SetEmptyModel(haulTruckModel, 1, 1, className, form);
+                    return PartialView("HaulTruck", haulTruckModel);
+                case "Loader":
+                    CreateFormLoaderViewModel loaderModel = new CreateFormLoaderViewModel();
+                    loaderModel.DetailsInfo = new Loader();
+                    SetEmptyModel(loaderModel, 1, 1, className, form);
+                    return PartialView("Loader", loaderModel);
+                case "Mill":
+                    CreateFormMillViewModel millModel = new CreateFormMillViewModel();
+                    millModel.DetailsInfo = new Mill();
+                    SetEmptyModel(millModel, 1, 1, className, form);
+                    return PartialView("Mill", millModel);
+                case "OtherConsumables":
+                    CreateFormOtherConsumablesViewModel otherConsumablesModel = new CreateFormOtherConsumablesViewModel();
+                    otherConsumablesModel.DetailsInfo = new OtherConsumables();
+                    SetEmptyModel(otherConsumablesModel, 1, 1, className, form);
+                    return PartialView("OtherConsumables", otherConsumablesModel);
+                case "OtherEquipment":
+                    CreateFormOtherEquipmentViewModel otherEquipmentModel = new CreateFormOtherEquipmentViewModel();
+                    otherEquipmentModel.DetailsInfo = new OtherEquipment();
+                    SetEmptyModel(otherEquipmentModel, 1, 1, className, form);
+                    return PartialView("OtherEquipment", otherEquipmentModel);
+                case "Pipe":
+                    CreateFormPipeViewModel pipeModel = new CreateFormPipeViewModel();
+                    pipeModel.DetailsInfo = new Pipe();
+                    SetEmptyModel(pipeModel, 1, 1, className, form);
+                    return PartialView("Pipe", pipeModel);
+                case "ProcessPlants":
+                    CreateFormProcessPlantsViewModel processPlantsModel = new CreateFormProcessPlantsViewModel();
+                    processPlantsModel.DetailsInfo = new ProcessPlants();
+                    SetEmptyModel(processPlantsModel, 1, 1, className, form);
+                    return PartialView("ProcessPlants", processPlantsModel);
+                case "Pump":
+                    CreateFormPumpViewModel pumpModel = new CreateFormPumpViewModel();
+                    pumpModel.DetailsInfo = new Pump();
+                    SetEmptyModel(pumpModel, 1, 1, className, form);
+                    return PartialView(String.Format("Create{0}", form.FormName), pumpModel);
+                case "Screen":
+                    CreateFormScreenViewModel screenModel = new CreateFormScreenViewModel();
+                    screenModel.DetailsInfo = new Screen();
+                    SetEmptyModel(screenModel, 1, 1, className, form);
+                    return PartialView("Screen", screenModel);
+                case "Tractors":
+                    CreateFormTractorsViewModel tractorsModel = new CreateFormTractorsViewModel();
+                    tractorsModel.DetailsInfo = new Tractors();
+                    SetEmptyModel(tractorsModel, 1, 1, className, form);
+                    return PartialView("Tractors", tractorsModel);
+                case "Vehicle":
+                    CreateFormVehicleViewModel Vehicle = new CreateFormVehicleViewModel();
+                    Vehicle.DetailsInfo = new Vehicle();
+                    SetEmptyModel(Vehicle, 1, 1, className, form);
+                    return PartialView("Vehicle", Vehicle);
+                case "Ventilation":
+                    CreateFormVentilationViewModel ventilationModel = new CreateFormVentilationViewModel();
+                    ventilationModel.DetailsInfo = new Ventilation();
+                    SetEmptyModel(ventilationModel, 1, 1, className, form);
+                    return PartialView("Ventilation", ventilationModel);
+                default:
+                    CreateFormViewModel model = new CreateFormViewModel();
+                    SetEmptyModel(model, 1, 1, className, form);
+                    return PartialView(form.FormName, model);
+            }
+
+
+        }
+
         private void SetUserRights(DisplayBaseViewModel model)
         {
             model.UserIsAuthenicated = WebSecurity.IsAuthenticated;
@@ -704,7 +937,7 @@ namespace MineBidz.Controllers
 
         private void SaveBidRequest(CreateFormViewModel model, string details, string fileName)
         {
-            List<Condition> condList = repository.ListCondition();
+            IEnumerable<Condition> condList = repository.ListCondition();
             List<Condition> conditionList = new List<Condition>();
             if (model.New)
             {

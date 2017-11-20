@@ -1,0 +1,198 @@
+﻿@model MineBidz.Models.CreateFormViewModel
+<link href="@Url.Content("~/Content/themes/base/jquery.ui.all.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
+
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    Html.HiddenFor(m => m.ClassName);
+    Html.HiddenFor(m => m.FormName);
+    Html.HiddenFor(m => m.RequestInfoId);
+
+    Html.RenderPartial("./Partials/CompanyInfo");
+    Html.RenderPartial("./Partials/BidInfo");
+    <div style="clear: both"></div>
+    @Html.HiddenFor(m => m.CategoryId)
+    @Html.HiddenFor(m => m.SubCategoryId)
+    <div id="formDiv"></div>
+
+    <input type="submit" value="Submit" />
+}
+
+    <button id="btnHelp">
+        <span>Click if need help</span>
+    </button>
+
+
+<script type="text/javascript">
+    $("document").ready(function () {
+        $("#ddlCountriesCompany").change(function () {
+            var selectedCountryCode = $(this).val();
+            var provincesSelect = $("#ddlProvincesCompany");
+            if (!selectedCountryCode) {
+                provincesSelect.empty();
+                provincesSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('--Select Country First--'));
+                return;
+            }
+            $.getJSON('@Url.Action("ProvincesStates", "Forms")', { countryCode: selectedCountryCode }, function (provinces) {
+                provincesSelect.empty();
+                if (provinces.length > 0) {
+                    provincesSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('--Please Select--')
+                    );
+                }
+                else {
+                    provincesSelect.append(
+                        $('<option/>')
+                             .attr('value', 'NA')
+                             .text('N/A')
+                    );
+                }
+                $.each(provinces, function (index, province) {
+                    provincesSelect.append(
+                            $('<option/>')
+                                .attr('value', province.ProvinceStateCode)
+                                .text(province.ProvinceStateName)
+                        );
+                });
+            });
+        });
+
+        $("#ddlCategory").change(function () {
+            var selectedCategoryId = $(this).val();
+            var selectedSubCategoryId = $("#ddlSubcategory").val();
+
+            var formsSelect = $("#ddlRequestForm");
+            if (!selectedSubCategoryId || !selectedCategoryId) {
+                formsSelect.empty();
+                formsSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('SELECT CATEGORY/SUBCATEGORY'));
+                return;
+            }
+            $.getJSON('@Url.Action("GetRequestForms", "Forms")', { categoryId: selectedCategoryId, subcategoryId: selectedSubCategoryId }, function (forms) {
+                formsSelect.empty();
+                if (forms.length > 0) {
+                    formsSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('SELECT EQUIPMENT')
+                    );
+                }
+                else {
+                    formsSelect.append(
+                        $('<option/>')
+                             .attr('value', 'NA')
+                             .text('N/A')
+                    );
+                }
+                $.each(forms, function (index, form) {
+                    formsSelect.append(
+                            $('<option/>')
+                                .attr('value', form.ClassName)
+                                .text(form.Title)
+                    );
+                });
+            });
+        });
+
+        $("#ddlSubcategory").change(function () {
+            var selectedSubCategoryId = $(this).val();
+            var selectedCategoryId = $("#ddlCategory").val();
+            var formsSelect = $("#ddlRequestForm");
+            if (!selectedSubCategoryId || !selectedCategoryId) {
+                formsSelect.empty();
+                formsSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('SELECT CATEGORY/SUBCATEGORY'));
+                return;
+            }
+            $.getJSON('@Url.Action("GetRequestForms", "Forms")', { categoryId: selectedCategoryId, subcategoryId: selectedSubCategoryId }, function (forms) {
+                formsSelect.empty();
+                if (forms.length > 0) {
+                    formsSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('SELECT EQUIPMENT')
+                    );
+                }
+                else {
+                    formsSelect.append(
+                        $('<option/>')
+                             .attr('value', 'NA')
+                             .text('N/A')
+                    );
+                }
+                $.each(forms, function (index, form) {
+                    formsSelect.append(
+                            $('<option/>')
+                                .attr('value', form.ClassName)
+                                .text(form.Title)
+                    );
+                });
+            });
+        });
+
+
+        $("#ddlCountriesDelivery").change(function () {
+            var selectedCountryCode = $(this).val();
+            $.getJSON('@Url.Action("ProvincesStates", "Forms")', { countryCode: selectedCountryCode }, function (provinces) {
+                var provincesSelect = $("#ddlProvincesDelivery");
+                provincesSelect.empty();
+                if (provinces.length > 1) {
+                    provincesSelect.append(
+                        $('<option/>')
+                             .attr('value', '')
+                             .text('--Please Select--')
+                    );
+                }
+                else {
+                    provincesSelect.append(
+                        $('<option/>')
+                             .attr('value', 'NA')
+                             .text('N/A')
+                    );
+                }
+                $.each(provinces, function (index, province) {
+                    provincesSelect.append(
+                            $('<option/>')
+                                .attr('value', province.ProvinceStateCode)
+                                .text(province.ProvinceStateName)
+                    );
+                });
+            });
+        });
+
+        $("#btnHelp").click(function () {
+            var formsSelectedId = $("#ddlRequestForm").val();
+
+            var url = "/forms/ShowForm/";
+            $.post(url, { className: formsSelectedId })
+                     .done(function (response) {
+                         $("#formDiv").html(response);
+                     });
+        }
+
+            );
+
+
+    });
+
+    $(".datePickerBidEndDate").datepicker({
+        showAnim: "show",
+        minDate: +3,
+        maxDate: "+1Y",
+        numberOfMonths: 2
+    });
+
+</script>
+

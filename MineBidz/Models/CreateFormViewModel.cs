@@ -25,5 +25,9 @@ namespace MineBidz.Models
         public bool Acknowledged { get; set; }
         public string DetailsInfoJson { get; set; }
         public int RequestInfoId { get; set; }
+        public System.Web.Mvc.SelectList Categories { get; set; }
+        public System.Web.Mvc.SelectList Subcategories { get; set; }
+        public System.Web.Mvc.SelectList RequestForms { get; set; }
+
     }
 }

@@ -43,10 +43,10 @@ namespace Domain.Concrete
         public string DamperOther { get; set; }
 
         public string HeatersBtuNumber { get; set; }
-        public string HeatersBtuNumberYesNo { get; set; }
+        public bool HeatersBtuNumberYesNo { get; set; }
 
         public string AirConditioningTons { get; set; }
-        public string AirConditioningTonsYesNo { get; set; } 
+        public bool AirConditioningTonsYesNo { get; set; } 
 
         public bool MotorIncluded { get; set; }
 

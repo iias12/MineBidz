@@ -1,0 +1,91 @@
+﻿@model MineBidz.Models.CreateFormProcessPlantsViewModel
+
+<fieldset>
+    <legend>@Model.FormTitle</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("DetailsInfo.SGSpecificGravity", "SG Specific Gravity")
+            @Html.TextBox("DetailsInfo.SGSpecificGravity")
+        </div>
+        <div>
+            @Html.Label("", "Product Type (ie. Gold etc...)")
+            @Html.TextBox("DetailsInfo.ProductType", "", new { @style = "width:250px" })
+        </div>
+        <div>
+            @Html.Label("", "Production Target")
+            @Html.TextBox("DetailsInfo.ProductionTargetNumber")
+            @Html.DropDownList("DetailsInfo.ProductionTargetUnit", new SelectList(new List<string>() { "", "TPH", "MTPH" }))
+        </div>
+        <div>
+            @Html.Label("", "Metallurgical Test Work", new { @style = "width:180px" })
+            @Html.Label("", "Yes", new { @style = "float:left; width:20px" })
+            @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "Yes", new { @style = "float:left; width:35px" })
+            @Html.Label("", "No", new { @style = "float:left; width:20px; padding-left:30px" })
+            @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "No", new { @style = "float:left; width:35px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Stationary")
+            @Html.RadioButton("DetailsInfo.SettingType", "Stationary", new { @style = "width:60px" })
+        </div>
+        <div>
+            @Html.Label("", "Mobile")
+            @Html.RadioButton("DetailsInfo.SettingType", "Mobile", new { @style = "width:40px" })
+        </div>
+        <div>
+            @Html.Label("", "Skid")
+            @Html.RadioButton("DetailsInfo.SettingType", "Skid", new { @style = "width:30px" })
+        </div>
+        <div>
+            @Html.Label("", "Plant")
+            @Html.RadioButton("DetailsInfo.SettingType", "Plant", new { @style = "width:30px" })
+        </div>
+        <div>
+            @Html.Label("", "Process Type")
+            @Html.DropDownList("DetailsInfo.ProcessType", new SelectList(Model.Repository.ListProcessType()))
+        </div>
+        <div>
+            @Html.Label("", "Ore Type")
+            @Html.DropDownList("DetailsInfo.OreType", new SelectList(new List<string>() { "", "Oxide", "Sulphide", "Other" }))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.OreTypeOther")
+        </div>
+        <div>
+            @Html.Label("", "Work Index(kWh/t)")
+            @Html.TextBox("DetailsInfo.WorkIndexkWht")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Process Condition")
+            @Html.DropDownList("DetailsInfo.ProcessCondition", new SelectList(new List<string>() { "", "Wet", "Dry" }))
+        </div>
+        <div>
+            @Html.Label("", "Circuit Type")
+            @Html.DropDownList("DetailsInfo.CircuitType", new SelectList(new List<string>() { "", "Open", "Closed" }))
+        </div>
+        <div>
+            @Html.Label("", "Feed 80% Passing Expected (mm)")
+            @Html.TextBox("DetailsInfo.Feed80PercentPassingExpectedMM")
+        </div>
+        <div>
+            @Html.Label("", "Product 80% Passing Expected (mm)")
+            @Html.TextBox("DetailsInfo.Product80PercentPassingExpectedMM")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Mill % of the Critical Speed")
+            @Html.TextBox("DetailsInfo.MillPercentOfCriticalSpeed")
+        </div>
+        <div>
+            @Html.Label("", "% Filling Degree Expected")
+            @Html.TextBox("DetailsInfo.PercentFillingDegreeExpected")
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialCreateMotor");}
+</fieldset>
+

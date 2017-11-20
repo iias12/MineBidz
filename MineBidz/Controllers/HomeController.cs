@@ -20,12 +20,12 @@ namespace MineBidz.Controllers
 
             //List<RequestInfoListViewModel> model = new List<RequestInfoListViewModel>();
 
-            List<RequestInfo> requestList = repository.ListRequestInfo();
+            IEnumerable<RequestInfo> requestList = repository.ListRequestInfo();
             IEnumerable<Country> countryList = repository.ListCountries();
             IEnumerable<ProvinceState> provinceList = repository.ListProvincesStates();
             IEnumerable<Category> categoryList = repository.ListCategory();
             IEnumerable<Subcategory> subCategoryList = repository.ListSubcategory();
-            IEnumerable<RequestForm> requestFormList = repository.ListForm();
+            IEnumerable<RequestForm> requestFormList = repository.GetAllRequestForms();
 
             List<RequestInfoListViewModel> model = requestList.Select(r => new RequestInfoListViewModel()
             {
@@ -76,7 +76,7 @@ namespace MineBidz.Controllers
 
             if (categoryId.HasValue)
             {
-                model.RequestForms = repository.ListForm(categoryId.Value);
+                model.RequestForms = repository.GetRequestFormsByCategory(categoryId.Value);
                 model.CategoryId = categoryId.Value;
                 model.SubcategoryList = repository.ListSubcategory();
             }

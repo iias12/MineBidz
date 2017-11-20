@@ -1,0 +1,47 @@
+﻿@model MineBidz.Models.CreateFormExcavatorViewModel
+
+<fieldset>
+    <legend>@Model.FormTitle</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity (Each)")
+            @Html.TextBox("DetailsInfo.Quantity")
+        </div>
+        <div>
+            @Html.Label("", "Excavator Type")
+            @Html.DropDownList("DetailsInfo.ExcavatorType", new SelectList(Model.Repository.ListExcavatorType()))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.ExcavatorTypeOther")
+        </div>
+        <div>
+            @Html.Label("", "Size Class (Metric Ton)")
+            @Html.DropDownList("DetailsInfo.SizeClassMetricTon", new SelectList(Model.Repository.ListSizeClassExcavatorMetricTon()))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.SizeClassMetricTonOther")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Bucket Capacity (yd3)")
+            @Html.TextBox("DetailsInfo.BucketCapacityYd3")
+        </div>
+        <div>
+            @Html.Label("", "Recommended Power")
+            @Html.TextBox("DetailsInfo.RecommendedPower")
+            @Html.DropDownList("DetailsInfo.RecommendedPowerUnit", new SelectList(Model.Repository.ListRecommendedPower()))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.RecommendedPowerUnitOther")
+        </div>
+        <div>
+            @Html.Label("", "Hours No Greater Than (hrs)")
+            @Html.TextBox("DetailsInfo.HoursNoGreaterThanHrs")
+        </div>
+    </div>
+</fieldset>
+

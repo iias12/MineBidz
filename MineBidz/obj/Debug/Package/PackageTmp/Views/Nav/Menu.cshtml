@@ -1,6 +1,0 @@
-﻿@model IEnumerable<Domain.Category>
-
-@foreach (var link in Model) {
-    <a href ="@Url.Action("Forms", "Home", new { categoryId = link.Id})"><img style="padding-left:3px; width:128px" class="@(link.Selected? "selected": null)" src="@Url.Content(String.Format("~/Images/{0}", link.Image))" /></a>
-}
-

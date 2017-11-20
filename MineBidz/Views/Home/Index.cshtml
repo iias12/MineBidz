@@ -4,46 +4,57 @@
     ViewBag.Title = "MineBidz - Connecting Mines with Suppliers, Vendors & Engineers";
 }
 
-<div id="earth" style='height: 107px; padding-top: 173px; width: 880px; background: url("../Images/home-header.png") no-repeat'>
- <img class="w3-hide-small" src="../Images/home-header.png" alt="logo" style="width:100%">
-
-    <a href="@Url.Action("Forms", "Home")" style="height:0">
-        <img style="border:0;" src='@Url.Content("~/Images/post-request.png")' alt="" width="508" height="94"></a>
+<img class="w3-hide-small w3-hide-medium" style="width: 100%; height: 100%" src = "@Url.Content("../Images/home-header.png")"/>
+<div class="w3-row">
+    <a href="@Url.Action("Forms", "Home")" style="height:73%">
+        <img style="width:27%; height:27%; padding-left:1%; padding-top:1%" src='@Url.Content("~/Images/post-request.png")' alt="" /></a>
+    <img style="float: right; height: 73%; width: 73%" src = "@Url.Content("../Images/current-bid-requests.png")"/>
 </div>
-<div id="home-title" style='height: 70px; width: 880px; background: url("../Images/current-bid-requests.png") no-repeat'></div>
 
-<div style="margin: 0 auto; overflow: auto">
-    <table style="width: 100%; border-bottom: solid thin; border-top: solid thin;">
-        <tr style="font-weight: 800">
-            <td>Condition</td>
-            <td>Bid Title</td>
-            <td>Category</td>
-            <td>Delivery Location</td>
-            <td>Bid ID</td>
-            <td>Date Posted</td>
-            <td>Bid End Date</td>
-        </tr>
+<div class="w3-responsive">
+    <table class="w3-table-all">
+        <thead>
+            <tr class="w3-gray">
+                <th>Condition</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Location
+                </th>
+                <th>Bid ID</th>
+                <th>Posted</th>
+                <th>Ends</th>
+            </tr>
+        </thead>
         @foreach (MineBidz.Models.RequestInfoListViewModel f in Model)
         {
-            <tr style="border-top: solid thin;">
+            <tr class="w3-hover-black" style="cursor:pointer" onclick="redirect(@f.RequestInfoId)">
                 <td>
                     @if (!String.IsNullOrEmpty(f.Condition))
                     {
-                        @Html.RouteLink(f.Condition, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })
+                        @f.Condition
                     }
                 </td>
                 <td>
                     @if (!String.IsNullOrEmpty(f.BidName))
                     {
-                        @Html.RouteLink(f.BidName, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })
+                        @f.BidName
                     }
                 </td>
-                <td>@Html.RouteLink(String.Format("{0}/{1}/{2}", f.Category, f.Subcategory, f.FormTitle), new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
-                <td>@Html.RouteLink(String.Format("{0}, {1}", f.Country, f.Location), new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
-                <td>@Html.RouteLink(f.RefNumber, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
-                <td>@Html.RouteLink(f.BidStart, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })</td>
-                <td>@Html.RouteLink(f.BidEnd, new { controller = "Forms", action = "Display", formId = f.RequestInfoId })
+                <td>@f.Category</td>
+                <td>@String.Format("{0}, {1}", f.Country, f.Location)</td>
+                <td>@f.RefNumber</td>
+                <td>@f.BidStart</td>
+                <td>@f.BidEnd
             </tr>
         }
     </table>
 </div>
+
+<script type="text/javascript">
+    function redirect(id) {
+        var url = '@Url.Action("Display", "Forms", new {formId = "__id__"})';
+        window.location.href = url.replace('__id__', id);
+    }
+</script>
+
+

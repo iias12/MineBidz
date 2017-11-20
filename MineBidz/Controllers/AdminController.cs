@@ -26,12 +26,12 @@ namespace MineBidz.Controllers
 
         private List<RequestInfoListViewModel> GetModel()
         {
-            List<RequestInfo> requestList = repository.ListRequestInfoAdmin();
+            List<RequestInfo> requestList = repository.ListRequestInfoAdmin().ToList();
             IEnumerable<Country> countryList = repository.ListCountries();
             IEnumerable<ProvinceState> provinceList = repository.ListProvincesStates();
             IEnumerable<Category> categoryList = repository.ListCategory();
             IEnumerable<Subcategory> subCategoryList = repository.ListSubcategory();
-            IEnumerable<RequestForm> requestFormList = repository.ListForm();
+            IEnumerable<RequestForm> requestFormList = repository.GetAllRequestForms();
 
             List<RequestInfoListViewModel> model = requestList.Select(r => new RequestInfoListViewModel()
             {

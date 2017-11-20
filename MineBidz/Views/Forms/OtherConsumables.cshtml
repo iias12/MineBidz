@@ -1,0 +1,36 @@
+﻿@model MineBidz.Models.CreateFormOtherConsumablesViewModel
+
+
+<fieldset>
+    <legend>@Model.FormTitle</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity")
+            @Html.TextBox("DetailsInfo.Quantity")
+            @Html.DropDownList("DetailsInfo.QuantityUnit", new SelectList(Model.Repository.ListFilterUnit()))
+        </div>
+        <div>
+            @Html.Label("", "Other (Specify)")
+            @Html.TextBox("DetailsInfo.QuantityUnitOther")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Diameter")
+            @Html.TextBox("DetailsInfo.Diameter")
+            @Html.DropDownList("DetailsInfo.DiameterUnit", new SelectList(Model.Repository.ListUnitDiameter()))
+        </div>
+        <div>
+            @Html.Label("", "Other (Specify)")
+            @Html.TextBox("DetailsInfo.DiameterUnitOther")
+        </div>
+        <div>
+            @Html.Label("", "Size")
+            @Html.TextBox("DetailsInfo.Size")
+        </div>
+    </div>
+</fieldset>
+
+<input type="submit" value="Submit" />
+}
+

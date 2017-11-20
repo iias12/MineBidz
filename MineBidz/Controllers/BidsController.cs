@@ -22,7 +22,7 @@ namespace MineBidz.Controllers
 
         public ActionResult Index()
         {
-            List<BidListViewModel> model = GetBidListModel(true);
+            var model = GetBidListModel(true);
             return View(model);
         }
 
@@ -44,7 +44,7 @@ namespace MineBidz.Controllers
             IEnumerable<ProvinceState> provinceList = repository.ListProvincesStates();
             IEnumerable<Category> categoryList = repository.ListCategory();
             IEnumerable<Subcategory> subCategoryList = repository.ListSubcategory();
-            IEnumerable<RequestForm> requestFormList = repository.ListForm();
+            IEnumerable<RequestForm> requestFormList = repository.GetAllRequestForms();
 
             var countries = repository.ListCountries();
             var provinces = new List<ProvinceState>();
@@ -88,7 +88,7 @@ namespace MineBidz.Controllers
                 IEnumerable<ProvinceState> provinceList = repository.ListProvincesStates();
                 IEnumerable<Category> categoryList = repository.ListCategory();
                 IEnumerable<Subcategory> subCategoryList = repository.ListSubcategory();
-                IEnumerable<RequestForm> requestFormList = repository.ListForm();
+                IEnumerable<RequestForm> requestFormList = repository.GetAllRequestForms();
 
                 var countries = repository.ListCountries();
                 var provinces = new List<ProvinceState>();
@@ -199,7 +199,7 @@ namespace MineBidz.Controllers
             IEnumerable<ProvinceState> provinceList = repository.ListProvincesStates();
             IEnumerable<Category> categoryList = repository.ListCategory();
             IEnumerable<Subcategory> subCategoryList = repository.ListSubcategory();
-            IEnumerable<RequestForm> requestFormList = repository.ListForm();
+            IEnumerable<RequestForm> requestFormList = repository.GetAllRequestForms();
 
             var countries = repository.ListCountries();
             var provinces = repository.ListProvincesStates(bid.CompanyInfo.CountryCode);
@@ -246,7 +246,7 @@ namespace MineBidz.Controllers
         {
             //approve logic here
             repository.ApproveBid(id, true);
-            List<BidListViewModel> model = GetBidListModel(true);
+            var model = GetBidListModel(true);
             return View("Index", model);
         }
 
@@ -254,7 +254,7 @@ namespace MineBidz.Controllers
         {
             //approve logic here
             repository.ApproveBid(id, false);
-            List<BidListViewModel> model = GetBidListModel(true);
+            var model = GetBidListModel(true);
             return View("Index", model);
         }
 
@@ -329,9 +329,9 @@ namespace MineBidz.Controllers
             }
         }
 
-        private List<BidListViewModel> GetBidListModel(bool admin)
+        private IEnumerable<BidListViewModel> GetBidListModel(bool admin)
         {
-            List<Bid> bidList = repository.ListBid(admin);
+            IEnumerable<Bid> bidList = repository.ListBid(admin);
             //List<RequestInfo> requestList = repository.ListRequestInfoAdmin();
 
             List<BidListViewModel> model = bidList.Select(b => new BidListViewModel()

@@ -363,6 +363,9 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Views\Home\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -399,10 +402,9 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Layout_old.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Forms.cshtml" />
     <Content Include="Views\Nav\Menu.cshtml" />
@@ -416,7 +418,7 @@
     <Content Include="Views\Bids\PartialBidCompanyInfo.cshtml" />
     <Content Include="Views\Account\Confirm.cshtml" />
     <Content Include="Views\Forms\CreateClassification.cshtml" />
-    <Content Include="Views\Forms\CreateLoader.cshtml" />
+    <Content Include="Views\Forms\Loader.cshtml" />
     <Content Include="Views\Forms\CreatePipe.cshtml" />
     <Content Include="Views\Forms\CreateVehicle.cshtml" />
     <Content Include="Views\Forms\Display\DisplayClassification.cshtml" />
@@ -470,11 +472,38 @@
     <Content Include="Views\Forms\Display\DisplayMill.cshtml" />
     <Content Include="Views\Forms\PartialDisplayProduct.cshtml" />
     <Content Include="Views\Forms\Edit\EditMill.cshtml" />
-    <Content Include="Views\ResponsiveExamples\W3SiteTemplate.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index_old.cshtml" />
+    <Content Include="Views\Forms\Index.cshtml" />
+    <Content Include="Views\Forms\Partials\FormCommonInfo.cshtml" />
+    <Content Include="Views\Forms\Partials\CompanyInfo.cshtml" />
+    <Content Include="Views\Forms\Partials\BidInfo.cshtml" />
+    <Content Include="Views\Forms\TestView.cshtml" />
+    <Content Include="Views\Forms\Screen.cshtml" />
+    <Content Include="Views\Forms\ADR.cshtml" />
+    <Content Include="Views\Forms\CIP.cshtml" />
+    <Content Include="Views\Forms\Classification.cshtml" />
+    <Content Include="Views\Forms\Crushers.cshtml" />
+    <Content Include="Views\Forms\Dewatering.cshtml" />
+    <Content Include="Views\Forms\Excavator.cshtml" />
+    <Content Include="Views\Forms\FilterCloths.cshtml" />
+    <Content Include="Views\Forms\GenericECE.cshtml" />
+    <Content Include="Views\Forms\GenericEngineering.cshtml" />
+    <Content Include="Views\Forms\HaulTruck.cshtml" />
+    <Content Include="Views\Forms\CreateLoader.cshtml" />
+    <Content Include="Views\Forms\Mill.cshtml" />
+    <Content Include="Views\Forms\OtherConsumables.cshtml" />
+    <Content Include="Views\Forms\OtherEquipment.cshtml" />
+    <Content Include="Views\Forms\Pipe.cshtml" />
+    <Content Include="Views\Forms\ProcessPlants.cshtml" />
+    <Content Include="Views\Forms\Tractors.cshtml" />
+    <Content Include="Views\Forms\Vehicle.cshtml" />
+    <Content Include="Views\Forms\Ventilation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Forms\Create\" />
+    <Folder Include="Views\ResponsiveExamples\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -1,0 +1,115 @@
+﻿@model MineBidz.Models.CreateFormClassificationViewModel
+
+<fieldset>
+    <legend>@Model.FormTitle</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("DetailsInfo.SGSpecificGravity", "SG Specific Gravity")
+            @Html.TextBox("DetailsInfo.SGSpecificGravity")
+        </div>
+        <div>
+            @Html.Label("", "Product Type (ie. Gold etc...)")
+            @Html.TextBox("DetailsInfo.ProductType", "", new { @style = "width:250px" })
+        </div>
+        <div>
+            @Html.Label("", "Production Target")
+            @Html.TextBox("DetailsInfo.ProductionTargetNumber")
+            @Html.DropDownList("DetailsInfo.ProductionTargetUnit", new SelectList(new List<string>() { "", "TPH", "MTPH" }))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Metallurgical Test Work", new { @style = "width:180px" })
+            @Html.Label("", "Yes", new { @style = "float:left; width:20px" })
+            @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "Yes", new { @style = "float:left; width:35px" })
+            @Html.Label("", "No", new { @style = "float:left; width:20px; padding-left:30px" })
+            @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "No", new { @style = "float:left; width:35px" })
+        </div>
+        <div>
+            @Html.Label("", "Type of Classifier")
+            @Html.DropDownList("DetailsInfo.ClassifierType", new SelectList(Model.Repository.ListClassifierType()))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.ClassifierTypeOther")
+        </div>
+        <div>
+            @Html.Label("", "Flow Rate (GPM)")
+            @Html.TextBox("DetailsInfo.FlowRateGPM")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "% Solids in Overflow")
+            @Html.TextBox("DetailsInfo.SolidsPercentOverflow")
+        </div>
+        <div>
+            @Html.Label("", "% Solids in Underflow")
+            @Html.TextBox("DetailsInfo.SolidsPercentUnderflow")
+        </div>
+        <div>
+            @Html.Label("", "Estimated Circulating Load")
+            @Html.TextBox("DetailsInfo.EstimatedCirculatingLoad")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Pressure Drop Target(kpa)")
+            @Html.TextBox("DetailsInfo.PressureDropTargetKPA")
+        </div>
+        <div>
+            @Html.Label("", "Cyclone Estimat. Diameter")
+            @Html.TextBox("DetailsInfo.CycloneEstimatedDiameter")
+            @Html.DropDownList("DetailsInfo.CycloneEstimatedDiameterUnit", new SelectList(new List<string> { "", "cm", "inch" }))
+        </div>
+        <div>
+            @Html.Label("", "Feed 80% Passing Expected(micron)")
+            @Html.TextBox("DetailsInfo.Feed80PercentPassingExpectedMicron")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Products 80% Passing Expected(micron)")
+            @Html.TextBox("DetailsInfo.Products80PercentPassingExpectedMicron")
+        </div>
+        <div>
+            @Html.Label("", "Motor Included in Quote")
+            @Html.Label("", "Yes", new { @style = "float:left; width:25px" })
+            @Html.RadioButton("DetailsInfo.MotorIncluded", true, new { @style = "float:left; width:35px" })
+            @Html.Label("", "No", new { @style = "float:left; width:25px; padding-left:30px" })
+            @Html.RadioButton("DetailsInfo.MotorIncluded", false, new { @style = "float:left; width:35px" })
+        </div>
+        <div>
+            @Html.Label("", "Motor Voltage")
+            @Html.TextBox("DetailsInfo.Motor.MotorVoltage")
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Enclosure Type")
+            @Html.TextBox("DetailsInfo.Motor.EnclosureType")
+        </div>
+        <div>
+            @Html.Label("", "Phase")
+            @Html.TextBox("DetailsInfo.Motor.Phase")
+        </div>
+        <div>
+            @Html.Label("", "RPM Speed")
+            @Html.TextBox("DetailsInfo.Motor.RpmSpeed")
+        </div>
+        <div>
+            @Html.Label("", "Power HP")
+            @Html.TextBox("DetailsInfo.Motor.PowerHP")
+        </div>
+        <div>
+            @Html.Label("", "Project Elevation")
+            @Html.TextBox("DetailsInfo.Motor.ProjectElevation")
+            @Html.DropDownList("DetailsInfo.Motor.ProjectElevationUnit", new SelectList(new List<string> { "", "FT", "M" }))
+        </div>
+        <div>
+            @Html.Label("", "Hertz")
+            @Html.TextBox("DetailsInfo.Motor.Hertz")
+        </div>
+    </div>
+</fieldset>
+
