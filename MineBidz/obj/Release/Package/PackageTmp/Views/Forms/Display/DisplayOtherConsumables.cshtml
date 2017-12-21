@@ -1,0 +1,44 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.OtherConsumables detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.OtherConsumables>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: Country - ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", "Location - ", new { @style = "float:left; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Quantity, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.QuantityUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Other: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.QuantityUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Diameter: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Diameter, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.DiameterUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Other: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.DiameterUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Size: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Size, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayCommon");}
+
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

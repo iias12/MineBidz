@@ -1,0 +1,66 @@
+﻿@model List<MineBidz.Models.BidListViewModel>
+
+@{
+    ViewBag.Title = "Bids";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Bids</h2>
+
+<div style="margin: 0 auto; overflow: auto">
+    <table style="width: 100%; border-bottom: solid thin; border-top: solid thin;">
+        <tr style="font-weight: 800">
+            <td>Ref #</td>
+            <td>Request #</td>
+            <td>Company Name</td>
+            <td>Contact Name</td>
+            <td>Email</td>
+            <td>Phone</td>
+            <td>Description</td>
+            <td>Accepted</td>
+            <td>Document</td>
+            <td>Approved</td>
+            <td>Actions</td>
+        </tr>
+        @foreach (MineBidz.Models.BidListViewModel bid in Model)
+        {
+            <tr style="border-top: solid thin;">
+                <td>@bid.RefNumber</td>
+                <td>@bid.RefNumberRequest</td>
+                <td>@bid.CompanyName</td>
+                <td>@bid.ContactName</td>
+                <td>@bid.Email</td>
+                <td>@bid.Phone</td>
+                <td>@bid.Description</td>
+                <td>@Html.CheckBox(String.Format("Accepted_{0}", bid.Id), bid.Accepted, new { @disabled = "disabled" })</td>
+                <td>
+                    @if (!String.IsNullOrEmpty(bid.DocumentInfo))
+                    {
+                        <a href="@Url.Content(String.Format("~/Documents/{0}", bid.DocumentInfo))"  target="_blank">Document</a>
+                    }
+                    else
+                    {
+                        <span>None</span>
+                    }
+                </td>
+                <td>@Html.CheckBox(String.Format("Approved_{0}", bid.Id), bid.Approved, new { @disabled = "disabled" })</td>
+                <td>
+                    @if(bid.Approved)
+                    {
+                        @Html.RouteLink("Disapprove", new { controller = "Bids", action = "Disapprove", id = bid.Id })
+                    }
+                    else
+                    {
+                        @Html.RouteLink("Approve", new { controller = "Bids", action = "Approve", id = bid.Id })
+                    }
+                    @Html.RouteLink("Delete", new { controller = "Bids", action = "Delete", id = bid.Id })
+                    @Html.RouteLink("Review", new { controller = "Bids", action = "Edit", id = bid.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@{
+    ViewBag.Title = "Bids";
+}
+

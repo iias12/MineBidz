@@ -17,10 +17,12 @@ namespace MineBidz.Models
         public string RefNumber { get; set; }
         public string BidEnd { get; set; }
         public string FormName { get; set; }
+        public string ClassName { get; set; }
         public string FormTitle { get; set; }
         public string BidName { get; set; }
         public string BidStart { get; set; }
         public string DocumentInfo { get; set; }
         public bool Approved { get; set; }
+        public bool VendorCanContact { get; set; }
     }
 }

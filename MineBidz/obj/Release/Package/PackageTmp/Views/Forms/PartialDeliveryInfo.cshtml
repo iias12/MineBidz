@@ -1,0 +1,51 @@
+﻿@model MineBidz.Models.CreateFormViewModel
+<div class="companyInfo">
+
+    <fieldset>
+        <legend>Delivery Info</legend>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.CompanyName, "Company Name")
+            @Html.TextBoxFor(m => m.DeliveryInfo.CompanyName)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.ContactName, "Contact Name")
+            @Html.TextBoxFor(m => m.DeliveryInfo.ContactName)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.StreetAddress, "Street Address")
+            @Html.TextBoxFor(m => m.DeliveryInfo.StreetAddress, new { @style = "width:300px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.City, "City")
+            @Html.TextBoxFor(m => m.DeliveryInfo.City)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.PostalCode, "Zip/Postal Code")
+            @Html.TextBoxFor(m => m.DeliveryInfo.PostalCode, new { @style = "width:80px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.CountryCode, "Country")
+            @Html.DropDownListFor(m => m.DeliveryInfo.CountryCode, ViewBag.Countries as SelectList, "--Please Select--", new { id = "ddlCountriesDelivery", style = "width:190px; margin-left:5px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.ProvinceStateCode, "Province/State")
+            @Html.DropDownListFor(m => m.DeliveryInfo.ProvinceStateCode, ViewBag.ProvincesDelivery as SelectList, "--Select Country First--", new { id = "ddlProvincesDelivery", style = "width:190px; margin-left:5px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.Phone, "Phone Number")
+            @Html.TextBoxFor(m => m.DeliveryInfo.Phone)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.Mobile, "Mobile Number")
+            @Html.TextBoxFor(m => m.DeliveryInfo.Mobile)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.Fax, "Fax Number")
+            @Html.TextBoxFor(m => m.DeliveryInfo.Fax)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.DeliveryInfo.Email, "Email")
+            @Html.TextBoxFor(m => m.DeliveryInfo.Email)
+        </div>
+    </fieldset>
+</div>

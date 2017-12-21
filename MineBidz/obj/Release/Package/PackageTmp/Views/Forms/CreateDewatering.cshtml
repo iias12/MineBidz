@@ -1,0 +1,80 @@
+﻿@model MineBidz.Models.CreateFormDewateringViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        @{Html.RenderPartial("PartialCreateProduct");}
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Dewatering Type")
+                @Html.DropDownList("DetailsInfo.DewateringType", new SelectList(Model.Repository.ListDewateringType()))
+            </div>
+            <div>
+                @Html.Label("", "Specify if 'Other'")
+                @Html.TextBox("DetailsInfo.DewateringTypeOther")
+            </div>
+            <div>
+                @Html.Label("", "Compacted Bulk Density of Dry Solids (SG)")
+                @Html.TextBox("DetailsInfo.CompactedBulkDensityofDrySolidsSG")
+            </div>
+            <div>
+                @Html.Label("", "Specific Gravity of Liquid (t/m3)")
+                @Html.TextBox("DetailsInfo.SpecificGravityOfLiquidTM3")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "% Dry Solid by Weight in Slurry")
+                @Html.TextBox("DetailsInfo.PercentDrySolidByWeightInSlurry")
+            </div>
+            <div>
+                @Html.Label("", "Total Weight of Dry Solids Per Day")
+                @Html.TextBox("DetailsInfo.TotalWeightOfDrySolidsPerDay")
+                @Html.DropDownList("DetailsInfo.TotalWeightOfDrySolidsPerDayUnit", new SelectList(new List<string>() { "", "tpd", "mtpd" }))
+            </div>
+            <div>
+                @Html.Label("", "% Dry Solid by Weight in Cake")
+                @Html.TextBox("DetailsInfo.PercentDrySolidByWeightInCake")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Total Cycle Time (If Pressure Filter) (min.)")
+                @Html.TextBox("DetailsInfo.TotalCycleTimeIfPressureFilterMin")
+            </div>
+            <div>
+                @Html.Label("", "Daily Availability (% 24hr day)")
+                @Html.TextBox("DetailsInfo.DailyAvailabilityPercent24HrDay")
+            </div>
+            <div>
+                @Html.Label("", "Number of Units Required (Ea.)")
+                @Html.TextBox("DetailsInfo.NumberOfUnitsRequiredEa")
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Feed 80% Passing Expected (mm)")
+                @Html.TextBox("DetailsInfo.Feed80PercentPassingExpectedMM")
+            </div>
+        </div>
+        @{Html.RenderPartial("PartialCreateMotor");}
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,119 @@
+﻿@model List<MineBidz.Models.RequestInfoListViewModel>
+
+@{
+    ViewBag.Title = "Mine Vendors - The mining industry's marketplace";
+}
+
+<img class="w3-hide-small w3-hide-medium" style="width:100%; margin-bottom:-6px" src = "@Url.Content("../Images/banner.jpg")"/>
+<img class="w3-hide-small w3-hide-medium" style="width:100%" src = "@Url.Content("../Images/banner-footer.png")"/>
+<div class="w3-main w3-row">
+    <div class="w3-col m2 l2 w3-hide-medium w3-hide-small">
+        <div id="ad-left" class="w3-hide-medium, w3-hide-small" style='width: 68%; float: right; background: url(@Url.Content("~/Images/Layout/side-ad-left-empty.png"))'>
+            <a href="http://www.tegaindustries.com/" target="_blank">
+                <img style="width: 95%;" src="/Images/Ad/tega-banner-1.jpg"></a>
+            <img src="@Url.Content("~/Images/Ad/ore-pros.gif")" alt="ore" style="width: 95%; margin-top: 10px;">
+            <img src="@Url.Content("~/Images/Ad/hmr-logo-1.jpg")" alt="hmr" style="width: 95%; margin-top: 10px;">
+            <a href="http://www.mincocorp.ca/" target="_blank">
+                <img style="width: 95%; margin-top: 10px;" src="/Images/Ad/minco-banner-1.jpg"></a>
+            <a href="http://www.solomonresources.ca/" target="_blank">
+                <img style="width: 95%; margin-top: 10px;" src="/Images/Ad/solomon-resources-1.jpg"></a>
+        </div>
+    </div>
+
+    <div class="w3-col m12 l8 s12">
+        <div class="w3-row">
+            <img style="float: left; width: 75%" src = "@Url.Content("../Images/bid-requests.png")"/>
+            <a href="@Url.Action("Index", "Forms")">
+                <img style="width:25%; padding-left:1%; margin-bottom:0px" src='@Url.Content("~/Images/bid-request-btn.png")' alt="" /></a>
+        </div>
+
+        <div class="w3-responsive">
+            <table class="w3-table-all">
+                <thead>
+                    <tr style="background-color: #646464; color: #ffffff">
+                        <th>Condition</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Location
+                        </th>
+                        <th>Bid ID</th>
+                        <th>Posted</th>
+                        <th>Ends</th>
+                    </tr>
+                </thead>
+                @foreach (MineBidz.Models.RequestInfoListViewModel f in Model)
+                {
+                    <tr class="w3-hover-black" style="cursor:pointer" onclick="redirect(@f.RequestInfoId)">
+                        <td>
+                            @if (!String.IsNullOrEmpty(f.Condition))
+                            {
+                                @f.Condition
+                            }
+                        </td>
+                        <td>
+                            @if (!String.IsNullOrEmpty(f.BidName))
+                            {
+                                @f.BidName
+                            }
+                        </td>
+                        <td>@f.Category</td>
+                        <td>@String.Format("{0}, {1}", f.Country, f.Location)</td>
+                        <td>@f.RefNumber</td>
+                        <td>@f.BidStart</td>
+                        <td>@f.BidEnd
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="w3-col m2 l2 w3-hide-medium w3-hide-small">
+        <div id="ad-right" class="w3-hide-medium w3-hide-small" style='width: 68%; float: left; background: url(@Url.Content("~/Images/Layout/side-ad-right-empty.png"))'>
+            <a href="http://www.seprosystems.com/" target="_blank">
+                <img style="width: 95%; float: right" src="/Images/Ad/sepro-minral-systems.gif" alt="sepro"></a>
+            <img src="@Url.Content("~/Images/Ad/right-ad-top.jpg")" alt="ore" style="width: 95%; margin-top: 10px; float:right">
+            <a href="http://www.scotiacorp.com/" target="_blank">
+                <img style="width: 95%; margin-top: 10px; float: right" src="~/Images/Ad/sion-logo.jpg"></a>
+            <img src="@Url.Content("~/Images/Ad/right-ad-bottom.jpg")" alt="ore" style="width: 95%; margin-top: 10px; float:right">
+            <a href="http://www.ghimac.ca/" target="_blank">
+                <img style="width: 95%; margin-top: 10px; float: right" src="/Images/Ad/ghimc-banner-1.jpg"></a>
+            <a href="http://www.iias.com/" target="_blank">
+                <img style="width: 95%; margin-top: 10px; float: right" src="/Images/Ad/internet-advertising-banner-ad-2.jpg"></a>
+        </div>
+    </div>
+
+    <!-- END MAIN -->
+</div>
+
+<div class="w3-container w3-hide-large">
+    <a href="http://www.seprosystems.com/" target="_blank">
+        <img style="width: 32%;" src="/Images/Ad/sepro-minral-systems.gif" alt="sepro"></a>
+    <img src="@Url.Content("~/Images/Ad/right-ad-top.jpg")" alt="ore" style="width: 32%; margin-top: 10px;">
+    <a href="http://www.scotiacorp.com/" target="_blank">
+        <img style="width: 32%; margin-top: 10px;" src="~/Images/Ad/sion-logo.jpg"></a>
+    <img src="@Url.Content("~/Images/Ad/right-ad-bottom.jpg")" alt="ore" style="width: 32%; margin-top: 10px;">
+    <a href="http://www.ghimac.ca/" target="_blank">
+        <img style="width: 32%; margin-top: 10px;" src="/Images/Ad/ghimc-banner-1.jpg"></a>
+    <a href="http://www.iias.com/" target="_blank">
+        <img style="width: 32%; margin-top: 10px;" src="/Images/Ad/internet-advertising-banner-ad-2.jpg"></a>
+    <a href="http://www.tegaindustries.com/" target="_blank">
+        <img style="width: 32%;" src="/Images/Ad/tega-banner-1.jpg"></a>
+    <img src="@Url.Content("~/Images/Ad/ore-pros.gif")" alt="ore" style="width: 32%; margin-top: 10px;">
+    <img src="@Url.Content("~/Images/Ad/hmr-logo-1.jpg")" alt="hmr" style="width: 32%; margin-top: 10px;">
+    <a href="http://www.mincocorp.ca/" target="_blank">
+        <img style="width: 32%; margin-top: 10px;" src="/Images/Ad/minco-banner-1.jpg"></a>
+    <a href="http://www.solomonresources.ca/" target="_blank">
+        <img style="width: 32%; margin-top: 10px;" src="/Images/Ad/solomon-resources-1.jpg"></a>
+
+</div>
+
+
+
+<script type="text/javascript">
+    function redirect(id) {
+        var url = '@Url.Action("Display", "Forms", new { formId = "__id__" })';
+        window.location.href = url.replace('__id__', id);
+    }
+</script>
+
+

@@ -1,0 +1,75 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.Pipe detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.Pipe>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, "Pipes")</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("",  "Quantity: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Quantity.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Unit:", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Unit.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.UnitUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.UnitUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Length: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Length.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.LengthUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.LengthUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("",  "Weight: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Weight.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.WeightUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.WeightUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Diameter: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Diameter.ToString(), new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.DiameterUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("",  "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.DiameterUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Material: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Material, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", detailsModel.MaterialUnit, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Specify if 'Other': ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.MaterialUnitOther, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("",  "Size (If Applicable): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.Size, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayCommon");}
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

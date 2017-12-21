@@ -165,6 +165,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BidsController.cs" />
+    <Compile Include="Controllers\GuestController.cs" />
     <Compile Include="Controllers\ResponsiveExamplesController.cs" />
     <Compile Include="Controllers\FormsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -207,6 +208,8 @@
     <Compile Include="Models\Concrete\CreateFormClassificationViewModel.cs" />
     <Compile Include="Models\Concrete\DisplayPumpViewModel.cs" />
     <Compile Include="Models\BaseBidViewModel.cs" />
+    <Compile Include="Models\CreateBidGuestViewModel.cs" />
+    <Compile Include="Models\PaymentViewModel.cs" />
     <Compile Include="Models\EditBidViewModel.cs" />
     <Compile Include="Models\CreateBidViewModel.cs" />
     <Compile Include="Models\CreateFormPumpViewModel.cs" />
@@ -238,6 +241,9 @@
     <Content Include="Images\Ad\sion-logo.jpg" />
     <Content Include="Images\Ad\solomon-resources-1.jpg" />
     <Content Include="Images\Ad\tega-banner-1.jpg" />
+    <Content Include="Images\banner.jpg" />
+    <Content Include="Images\bid-request-btn.png" />
+    <Content Include="Images\bid-requests.png" />
     <Content Include="Images\category-title.png" />
     <Content Include="Images\construction.png" />
     <Content Include="Images\consumables.png" />
@@ -316,6 +322,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\banner-footer.png" />
+    <Content Include="Images\main-logo.png" />
+    <Content Include="Images\main_logo_horizontal.png" />
     <Content Include="Images\PDF\MineBidZPrivacyPolicy.pdf" />
     <Content Include="Images\PDF\MineBidZTermsandConditionsforUsers.pdf" />
     <Content Include="Images\PDF\MineBidZTermsandLicenseforBidders.pdf" />
@@ -326,6 +335,7 @@
     <Content Include="Images\PDF\Terms of Service and License Agreement for Bidders REV1.pdf" />
     <Content Include="Images\PDF\Terms of Service for Users REV1.pdf" />
     <Content Include="Documents\5186238c-0ebc-4449-be4d-2d54f9bbf95b.docx" />
+    <None Include="Properties\PublishProfiles\FTP Profile.pubxml" />
     <None Include="Properties\PublishProfiles\Standard.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\Account\bid-option-text-group-1.png" />
@@ -349,6 +359,7 @@
     <Content Include="Images\post-a-bid-request.jpg" />
     <Content Include="Images\post-request.png" />
     <Content Include="Images\subcategory-title.png" />
+    <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -499,6 +510,11 @@
     <Content Include="Views\Forms\Tractors.cshtml" />
     <Content Include="Views\Forms\Vehicle.cshtml" />
     <Content Include="Views\Forms\Ventilation.cshtml" />
+    <Content Include="Views\Guest\Create.cshtml" />
+    <Content Include="Views\Guest\PartialCompanyInfo.cshtml" />
+    <Content Include="Views\Guest\PartialQuoteInfo.cshtml" />
+    <Content Include="Views\Guest\PartialPaymentInfo.cshtml" />
+    <Content Include="Views\Guest\Confirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

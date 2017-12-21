@@ -22,5 +22,6 @@ namespace Domain
         public List<Condition> ConditionList { get; set; }
         public string Description { get; set; }
         public string DocumentInfo { get; set; }
+        public bool VendorCanContact { get; set; }
     }
 }

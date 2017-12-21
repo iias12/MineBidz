@@ -1,0 +1,33 @@
+﻿@model MineBidz.Models.CreateBidGuestViewModel
+
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2} - {3}", Model.RequestInfo.Category, Model.RequestInfo.Subcategory, Model.RequestInfo.ClassName, Model.RequestInfo.RefNumber)</legend>
+    <div>
+        <table>
+            <tr>
+                <td>@Html.Label(Model.RequestInfo.Country)</td>
+                <td>@Html.Label(Model.RequestInfo.Location)</td>
+                <td>@Html.Label(Model.RequestInfo.BidEnd)
+            </tr>
+        </table>
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @style = "width:50%" })
+    </div>
+    <div>
+        <div style="float: left; margin-top: 5px">
+            @Html.LabelFor(m => m.ReferenceNumber, "Vendor Quote Number")
+            @Html.TextBoxFor(m => m.ReferenceNumber, new { @maxlength = "10" })
+        </div>
+        <div style="float: left; margin-top: 5px; padding-left:10px">
+            @Html.Label("file", "Document:")
+            <input type="file" name="EngineeringDesign" id="EngineeringDesign" style="height: 25px" />
+        </div>
+        <div style="clear:both; padding-top: 15px">
+            @Html.LabelFor(m => m.Acknowledged, "I agree with", new { @style = "float:left" })
+            <a href="@Url.Content("~/Images/PDF/Terms of Service and License Agreement for Bidders REV1.pdf")" target="_blank" style="float:left; margin-left:5px">Terms and Conditions</a>
+            @Html.CheckBoxFor(m => m.Acknowledged, new { @style = "float:left" })
+        </div>
+    </div>
+</fieldset>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace MineBidz.Models
 {
@@ -15,14 +16,19 @@ namespace MineBidz.Models
         public bool New { get; set; }
         public bool Used { get; set; }
         public bool Rental { get; set; }
+        [Required(ErrorMessage = "Category is required")]
         public int CategoryId { get; set; }
+        [Required(ErrorMessage = "Sub Category is required")]
         public int SubCategoryId { get; set; }
         public Repository Repository { get; set; }
         public HttpPostedFileBase EngineeringDesign { get; set; }
-        public string ClassName {get; set;}
+        [Required(AllowEmptyStrings=false, ErrorMessage="Equipment name is required")]
+        public string EquipmentId {get; set;}
         public string FormName { get; set; }
         public string FormTitle { get; set; }
+        [Range(typeof(bool), "true", "true", ErrorMessage = "You have to accept")]
         public bool Acknowledged { get; set; }
+        public bool VendorCanContact { get; set; }
         public string DetailsInfoJson { get; set; }
         public int RequestInfoId { get; set; }
         public System.Web.Mvc.SelectList Categories { get; set; }

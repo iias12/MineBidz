@@ -1,0 +1,52 @@
+﻿@model MineBidz.Models.CreateBidGuestViewModel
+
+<fieldset>
+    <legend>Payment Info</legend>
+    <div>
+        <span style="color:red; padding-left:5px">$19.95 </span><span>Plus applicable taxes</span>
+    </div>
+    <div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.CreditCardNumber, "CC Number")
+            @Html.TextBoxFor(m => m.Payment.CreditCardNumber, new { @maxlength = "20" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.NameOnCard, "Name On Card")
+            @Html.TextBoxFor(m => m.Payment.NameOnCard)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.ExpirationMonth, "Month")
+            @Html.DropDownListFor(m => m.Payment.ExpirationMonth, ViewBag.Months as SelectList)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.ExpirationMonth, "Year")
+            @Html.DropDownListFor(m => m.Payment.ExpirationYear, ViewBag.Years as SelectList)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.SecurityCode, "CVV")
+            @Html.TextBoxFor(m => m.Payment.SecurityCode, new { @maxlength = "3" })
+        </div>
+    </div>
+    <div style="clear:both; padding-top:5px">
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.StreetAddress, "Billing Street Address")
+            @Html.TextBoxFor(m => m.Payment.StreetAddress, new { @style = "width:300px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.City, "City")
+            @Html.TextBoxFor(m => m.Payment.City)
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.PostalCode, "Zip/Postal")
+            @Html.TextBoxFor(m => m.Payment.PostalCode, new { @style = "width:80px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.CountryCode, "Country")
+            @Html.DropDownListFor(m => m.Payment.CountryCode, ViewBag.Countries as SelectList, "--Please Select--", new { id = "ddlCountriesBilling", style = "width:190px; margin-left:5px" })
+        </div>
+        <div style="float: left">
+            @Html.LabelFor(m => m.Payment.ProvinceStateCode, "Province/State")
+            @Html.DropDownListFor(m => m.Payment.ProvinceStateCode, ViewBag.Provinces as SelectList, "--Select Country First--", new { id = "ddlProvincesBilling", style = "width:190px; margin-left:5px" })
+        </div>
+    </div>
+</fieldset>

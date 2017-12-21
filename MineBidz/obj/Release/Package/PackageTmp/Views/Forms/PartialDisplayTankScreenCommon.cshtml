@@ -1,0 +1,51 @@
+﻿@model Domain.Concrete.Common.TankScreenCommon
+
+<div class="createForm">
+    <div>
+        @Html.Label("", "Loaded Carbon Storage Tank: ", new { @style = "float:left" })
+        @Html.Label("", Model.LoadedCarbonStorageTank ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Barren Carbon Storage Tank: ", new { @style = "float:left" })
+        @Html.Label("", Model.BarrenCarbonStorageTank ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+</div>
+<div class="createForm">
+    <div>
+        @Html.Label("", "Pregnant Solution Storage Tank: ", new { @style = "float:left" })
+        @Html.Label("", Model.PregnantSolutionStorageTank ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Barren Solution Storage Tank: ", new { @style = "float:left" })
+        @Html.Label("", Model.BarrenSolutionStorageTank ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+</div>
+<div class="createForm">
+    <div>
+        @Html.Label("", "Dewatering Screens: ", new { @style = "float:left" })
+        @Html.Label("", Model.DewateringScreens ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Sizing Screens: ", new { @style = "float:left" })
+        @Html.Label("", Model.SizingScreens ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+</div>
+<div class="createForm">
+    <div>
+        @Html.Label("", "Acid Wash Circuit: ", new { @style = "float:left" })
+        @Html.Label("", Model.AcidWashCircuit ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Strip Circuit: ", new { @style = "float:left" })
+        @Html.Label("", Model.StripCircuit ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+        <div>
+        @Html.Label("", "Carbon Kiln: ", new { @style = "float:left" })
+        @Html.Label("", Model.CarbonKiln ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+    <div>
+        @Html.Label("", "Electrowinning: ", new { @style = "float:left" })
+        @Html.Label("", Model.Electrowinning ? "Yes" : "No", new { @style = "float:left; color:#000; margin-left:5px" })
+    </div>
+</div>
+

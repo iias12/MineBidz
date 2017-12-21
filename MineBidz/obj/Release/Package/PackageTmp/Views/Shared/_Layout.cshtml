@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html, body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .w3-sidebar {
+            z-index: 3;
+            width: 250px;
+            top: 43px;
+            bottom: 0;
+            height: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="logo" class="w3-center" style="line-height: 1.2">
+        <img src="../Images/main-logo.png" alt="logo" style="width: 100%" />
+    </div>
+
+    <!-- Navbar -->
+    <nav>
+        @{Domain.Repository repository = new Domain.Repository(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);}
+        <div class="w3-container w3-theme" style="font-size: 20px; padding-left: 7%">
+            @if (WebSecurity.IsAuthenticated && (WebSecurity.CurrentUserId == 6 || WebSecurity.CurrentUserId == 1))
+            {
+                @Html.ActionLink("HOME", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("REQUESTS", "Index", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("BIDS", "Index", "Bids", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("PACKAGES", "Packages", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.Partial("_LoginPartial")
+            }
+            else
+            {
+                @Html.ActionLink("HOME", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("SERVICES", "Services", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("ABOUT US", "About", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("CONTACT", "Contact", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.Partial("_LoginPartial")
+                @Html.ActionLink("POST A BID REQUEST", "Index", "Forms", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center", @style = "background: url(@Url.Content('~/Images/Layout/post-a-bid-background.png')) no-repeat" })
+            }
+        </div>
+    </nav>
+
+    <div>
+        @RenderBody()
+    </div>
+    <!-- END MAIN -->
+
+    <footer id="myFooter" class="w3-row  w3-theme-l2" style="margin-top: 10px;">
+        <div class="w3-container w3-center">
+            @Html.ActionLink("Home", "Index", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
+            @Html.ActionLink("Services", "Services", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
+            @Html.ActionLink("About Us", "About", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
+            @Html.ActionLink("Contact Us", "Contact", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
+        </div>
+        <div class="w3-container w3-right">
+            <div><a href="@Url.Content("~/Images/PDF/Privacy Policy REV1.pdf")" target="_blank">Privacy Policy</a></div>
+            <div><a href="@Url.Content("~/Images/PDF/Terms of Service for Users REV1.pdf")" target="_blank">Terms of Use</a></div>
+        </div>
+    </footer>
+
+
+    <script>
+    </script>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

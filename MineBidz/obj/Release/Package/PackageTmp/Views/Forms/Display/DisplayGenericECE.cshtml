@@ -1,0 +1,26 @@
+﻿@model MineBidz.Models.DisplayBaseViewModel
+
+@{Domain.Concrete.GenericECE detailsModel = Newtonsoft.Json.JsonConvert.DeserializeObject<Domain.Concrete.GenericECE>(Model.DetailsInfoJson);}
+<fieldset>
+    <legend>@String.Format("{0}/{1}/{2}", Model.Category, Model.Subcategory, Model.FormTitle)</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Delivery: ", new { @style = "float:left" })
+            @Html.Label("", Model.Contry, new { @style = "float:left; color:#000; margin-left:5px" })
+            @Html.Label("", Model.Location, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity (Each): ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.QuantityEach, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+        <div>
+            @Html.Label("", "Site Visit Required: ", new { @style = "float:left" })
+            @Html.Label("", detailsModel.VisitSiteRequired, new { @style = "float:left; color:#000; margin-left:5px" })
+        </div>
+    </div>
+    @{Html.RenderPartial("PartialDisplayCommon");}
+</fieldset>
+
+@{Html.RenderPartial("PartialDisplayPlaceBid");}

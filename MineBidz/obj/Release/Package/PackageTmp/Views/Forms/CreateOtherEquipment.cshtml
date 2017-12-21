@@ -1,0 +1,55 @@
+﻿@model MineBidz.Models.CreateFormOtherEquipmentViewModel
+
+@{
+    ViewBag.Title = Model.FormTitle;
+}
+
+@using (Html.BeginForm(String.Format("Create{0}", Model.ClassName), "Forms", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @{Html.RenderPartial("PartialFormCommonInfo");}
+    </div>
+
+    <fieldset>
+        <legend>@Model.FormTitle</legend>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Work Index KWH")
+                @Html.TextBox("DetailsInfo.WorkIndexKWH")
+            </div>
+            <div>
+                @Html.Label("", "SG Specific Gravity")
+                @Html.TextBox("DetailsInfo.SGSpecificGravity")
+            </div>
+            <div>
+                @Html.Label("", "Ore Type")
+                @Html.TextBox("DetailsInfo.OreType", "", new { @style = "width:250px" })
+            </div>
+        </div>
+        <div class="createForm">
+            <div>
+                @Html.Label("", "Production Target")
+                @Html.TextBox("DetailsInfo.ProductionTargetNumber")
+                @Html.DropDownList("DetailsInfo.ProductionTargetUnit", new SelectList(new List<string>() { "", "TPH", "MTPH" }))
+            </div>
+            <div>
+                @Html.Label("", "Metallurgical Test Work", new { @style = "width:180px" })
+                @Html.Label("", "Yes", new { @style = "float:left; width:20px" })
+                @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "Yes", new { @style = "float:left; width:35px" })
+                @Html.Label("", "No", new { @style = "float:left; width:20px; padding-left:30px" })
+                @Html.RadioButton("DetailsInfo.MetallurgicalTestWork", "No", new { @style = "float:left; width:35px" })
+            </div>
+        </div>
+        @{Html.RenderPartial("PartialCreateMotor");}
+    </fieldset>
+
+    <input type="submit" value="Submit" />
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,57 @@
+﻿@model MineBidz.Models.CreateFormHaulTruckViewModel
+
+<fieldset>
+    <legend>@Model.FormTitle</legend>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Quantity (Each)")
+            @Html.TextBox("DetailsInfo.Quantity")
+        </div>
+        <div>
+            @Html.Label("", "Production Target")
+            @Html.TextBox("DetailsInfo.ProductionTarget")
+            @Html.DropDownList("DetailsInfo.ProductionTargetUnit", new SelectList(new List<string>() { "", "TPH", "MTPH" }))
+        </div>
+        <div>
+            @Html.Label("", "Body Type")
+            @Html.DropDownList("DetailsInfo.BodyType", new SelectList(new List<string>() { "", "Articulated", "Standard", "Other" }))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.BodyTypeOther")
+        </div>
+        <div>
+            @Html.Label("", "Types")
+            @Html.DropDownList("DetailsInfo.Types", new SelectList(new List<string> { "", "Rear Dump", "Bottom Dump", "Water", "Tow", "Lube", "Other" }))
+        </div>
+        <div>
+            @Html.Label("", "Size Classes")
+            @Html.DropDownList("DetailsInfo.SizeClasses", new SelectList(new List<string> { "", "90-110", "127-150", "154-190", "218-255", "290", "308-363", "Other" }))
+        </div>
+    </div>
+    <div class="createForm">
+        <div>
+            @Html.Label("", "Capacity (yd3)")
+            @Html.TextBox("DetailsInfo.CapacityYd3")
+        </div>
+        <div>
+            @Html.Label("", "Recommended Power")
+            @Html.TextBox("DetailsInfo.RecommendedPower")
+            @Html.DropDownList("DetailsInfo.RecommendedPowerUnit", new SelectList(Model.Repository.ListRecommendedPower()))
+        </div>
+        <div>
+            @Html.Label("", "Specify if 'Other'")
+            @Html.TextBox("DetailsInfo.RecommendedPowerUnitOther")
+        </div>
+        <div>
+            @Html.Label("", "Hours No Greater Than (hrs)")
+            @Html.TextBox("DetailsInfo.HoursNoGreaterThanHrs")
+        </div>
+        <div>
+            @Html.Label("", "Cab (If Applicable)")
+            @Html.DropDownList("DetailsInfo.Cab", new SelectList(new List<string> { "", "Open", "Enclosed", "Other" }))
+        </div>
+    </div>
+</fieldset>
+
+

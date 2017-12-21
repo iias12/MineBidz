@@ -37,8 +37,8 @@ namespace MineBidz.Controllers
                 RefNumber = String.Format("MBR#{0}", r.Id),
                 Subcategory = subCategoryList.FirstOrDefault(s => s.Id == r.SubcategoryId).Title,
                 Condition = String.Join("/", r.ConditionList.Select(c=>c.Name).ToArray()),
-                FormName = requestFormList.FirstOrDefault(f => f.ClassName == r.ClassName).FormName,
-                FormTitle = requestFormList.FirstOrDefault(f => f.ClassName == r.ClassName).Title,
+                FormName = requestFormList.FirstOrDefault(f => f.EquipmentId == r.ClassName).FormName,
+                FormTitle = requestFormList.FirstOrDefault(f => f.EquipmentId == r.ClassName).Title,
                 BidName = r.BidInfo.BidName,
                 BidStart = r.BidInfo.BidStartDate.ToShortDateString()
             }).OrderByDescending(r=>r.BidStart).ToList();

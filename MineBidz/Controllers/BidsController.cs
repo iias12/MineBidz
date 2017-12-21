@@ -64,7 +64,7 @@ namespace MineBidz.Controllers
                 RefNumber = String.Format("MBR#{0}", request.Id),
                 Subcategory = subCategoryList.FirstOrDefault(s => s.Id == request.SubcategoryId).Title,
                 Condition = request.ConditionList == null? "" :String.Join("/", request.ConditionList.Select(c => c.Name).ToArray()),
-                FormName = requestFormList.FirstOrDefault(f => f.ClassName == request.ClassName).FormName
+                FormName = requestFormList.FirstOrDefault(f => f.EquipmentId == request.ClassName).FormName
             };
 
             model.CompanyInfo = new ContactInfo();
@@ -106,7 +106,7 @@ namespace MineBidz.Controllers
                     RefNumber = String.Format("MBR#{0}", request.Id),
                     Subcategory = subCategoryList.FirstOrDefault(s => s.Id == request.SubcategoryId).Title,
                     Condition = "New",
-                    FormName = requestFormList.FirstOrDefault(f => f.ClassName == request.ClassName).FormName
+                    FormName = requestFormList.FirstOrDefault(f => f.EquipmentId == request.ClassName).FormName
                 };
 
                 return View(model);
@@ -176,6 +176,7 @@ namespace MineBidz.Controllers
             }
         }
 
+
         //
         // GET: /Bids/Delete/5
         public ActionResult Delete(int id)
@@ -234,7 +235,7 @@ namespace MineBidz.Controllers
                 RefNumber = String.Format("MBR#{0}", request.Id),
                 Subcategory = subCategoryList.FirstOrDefault(s => s.Id == request.SubcategoryId).Title,
                 Condition = request.ConditionList == null ? "" : String.Join("/", request.ConditionList.Select(c => c.Name).ToArray()),
-                FormName = requestFormList.FirstOrDefault(f => f.ClassName == request.ClassName).FormName
+                FormName = requestFormList.FirstOrDefault(f => f.EquipmentId == request.ClassName).FormName
             };
 
             ViewBag.Message = null;

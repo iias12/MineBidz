@@ -77,7 +77,7 @@ namespace Domain
                     ,company.[fax]
                     ,company.[email]
       
-                  FROM [minebidz_iias_ca_sql].[dbo].[bid] bid
+                  FROM [dbo].[bid] bid
                   INNER JOIN
                   contact_info company ON company.contact_id = bid.contact_info_id
                   INNER JOIN 
@@ -168,7 +168,7 @@ namespace Domain
                       ,[bid_name]
                       ,[bid_end]
                       ,[bid_start]
-                  FROM [minebidz_iias_ca_sql].[dbo].[request_info] ri
+                  FROM [dbo].[request_info] ri
                   INNER JOIN
                   contact_info company ON company.contact_id = ri.company_contact_id
                   INNER JOIN
@@ -232,7 +232,7 @@ namespace Domain
                 }
                 command.CommandText = @"SELECT ci.request_info_id
                           ,[s_condition_id]
-                      FROM [minebidz_iias_ca_sql].[dbo].[condition_info] ci
+                      FROM [dbo].[condition_info] ci
                     INNER JOIN request_info ri ON ri.request_info_id = ci.request_info_id
                     INNER JOIN bid_info bi ON bi.bid_info_id = ri.bid_info_id WHERE ri.approved = 1 AND bi.bid_end > GETDATE()
                 ";
@@ -297,7 +297,7 @@ namespace Domain
                     ,[bid_name]
                     ,[bid_end]
                     ,[bid_start]
-                    FROM [minebidz_iias_ca_sql].[dbo].[request_info] ri
+                    FROM [dbo].[request_info] ri
                     INNER JOIN
                     contact_info company ON company.contact_id = ri.company_contact_id
                     INNER JOIN
@@ -364,7 +364,7 @@ namespace Domain
                 }
                 command.CommandText = @"SELECT ci.request_info_id
                           ,[s_condition_id]
-                      FROM [minebidz_iias_ca_sql].[dbo].[condition_info] ci
+                      FROM [dbo].[condition_info] ci
                     INNER JOIN request_info ri ON ri.request_info_id = ci.request_info_id
                     INNER JOIN bid_info bi ON bi.bid_info_id = ri.bid_info_id WHERE ri.approved = 1 AND bi.bid_end > GETDATE()
                 ";
@@ -511,7 +511,7 @@ namespace Domain
                         Id = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         FormName = reader.GetString(2),
-                        ClassName = reader.GetString(3)
+                        EquipmentId = reader.GetString(3)
                     });
                 }
             }
@@ -545,7 +545,7 @@ namespace Domain
                         Id = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         FormName = reader.GetString(2),
-                        ClassName = reader.GetString(3),
+                        EquipmentId = reader.GetString(3),
                         SubcategoryId = reader.GetInt32(4),
                         Implemented = reader.GetBoolean(5)
                     });
@@ -571,7 +571,7 @@ namespace Domain
                       ,[PackageName]
                       ,[PackageText]
                       ,[Image]
-                  FROM [minebidz_iias_ca_sql].[dbo].[s_webpages_Packages] p 
+                  FROM [dbo].[s_webpages_Packages] p 
                   INNER JOIN webpages_UsersPackages up
                   ON p.PackageId = up.PackageId
                   WHERE up.UserId = @UserId
@@ -614,7 +614,7 @@ namespace Domain
                       ,[PackageName]
                       ,[PackageText]
                       ,[Image]
-                  FROM [minebidz_iias_ca_sql].[dbo].[s_webpages_Packages] WHERE PackageId = @pid";
+                  FROM [dbo].[s_webpages_Packages] WHERE PackageId = @pid";
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -668,7 +668,7 @@ namespace Domain
                     ,company.[fax]
                     ,company.[email]
       
-                  FROM [minebidz_iias_ca_sql].[dbo].[bid] bid
+                  FROM [dbo].[bid] bid
                   INNER JOIN
                   contact_info company ON company.contact_id = bid.contact_info_id
                   WHERE bid_id = @bid_id";
@@ -734,7 +734,7 @@ namespace Domain
                         Id = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         FormName = reader.GetString(2),
-                        ClassName = reader.GetString(3)
+                        EquipmentId = reader.GetString(3)
                     };
                 }
             }
@@ -812,52 +812,55 @@ namespace Domain
                 SqlParameter request_info_id = new SqlParameter("@request_info_id", requestInfoId); command.Parameters.Add(request_info_id);
 
 
-                command.CommandText = @"SELECT [request_info_id]
-                      ,[UserId]
-                      ,[details_info]
-                      ,[approved]
-                        ,[class_name]
-                        ,[category_id]
-                        ,[subcategory_id]
-                        ,[description]
-                        ,[document_info]
+                command.CommandText = @"SELECT 
+                    [request_info_id]
+                    ,[UserId]
+                    ,[details_info]
+                    ,[approved]
+                    ,[class_name]
+                    ,[category_id]
+                    ,[subcategory_id]
+                    ,[description]
+                    ,[document_info]
+                    ,[vendor_can_contact]
      
-                      ,company.[company_name]
-                      ,company.[contact_name]
-                      ,company.[contact_id]
-                      ,company.[street_address]
-                      ,company.[city]
-                      ,company.[state_province_code]
-                      ,company.[country_code]
-                      ,company.[postal_code]
-                      ,company.[phone]
-                      ,company.[mobile]
-                      ,company.[fax]
-                      ,company.[email]
+                    ,company.[company_name]
+                    ,company.[contact_name]
+                    ,company.[contact_id]
+                    ,company.[street_address]
+                    ,company.[city]
+                    ,company.[state_province_code]
+                    ,company.[country_code]
+                    ,company.[postal_code]
+                    ,company.[phone]
+                    ,company.[mobile]
+                    ,company.[fax]
+                    ,company.[email]
       
-                      ,delivery.[company_name] as d_company_name
-                      ,delivery.[contact_name]as d_contact_name
-                      ,delivery.[contact_id]as d_contact_id
-                      ,delivery.[street_address] as d_street_address
-                      ,delivery.[city] as d_city
-                      ,delivery.[state_province_code] as d_state_province_code
-                      ,delivery.[country_code] as d_country_code
-                      ,delivery.[postal_code] as d_postal_code
-                      ,delivery.[phone] as d_phone
-                      ,delivery.[mobile] as d_mobile
-                      ,delivery.[fax] as d_fax
-                      ,delivery.[email] as d_email
-                      ,bi.[bid_name]
-                      ,bi.[bid_info_id]
-                      ,bi.[bid_end]
-                      ,bi.[bid_start]
-                  FROM [minebidz_iias_ca_sql].[dbo].[request_info] ri
-                  INNER JOIN
-                  contact_info company ON company.contact_id = ri.company_contact_id
-                  INNER JOIN
-                  contact_info delivery ON delivery.contact_id = ri.delivery_contact_id
-                  INNER JOIN 
-                  bid_info bi ON bi.bid_info_id = ri.bid_info_id
+                    ,delivery.[company_name] as d_company_name
+                    ,delivery.[contact_name]as d_contact_name
+                    ,delivery.[contact_id]as d_contact_id
+                    ,delivery.[street_address] as d_street_address
+                    ,delivery.[city] as d_city
+                    ,delivery.[state_province_code] as d_state_province_code
+                    ,delivery.[country_code] as d_country_code
+                    ,delivery.[postal_code] as d_postal_code
+                    ,delivery.[phone] as d_phone
+                    ,delivery.[mobile] as d_mobile
+                    ,delivery.[fax] as d_fax
+                    ,delivery.[email] as d_email
+                    ,bi.[bid_name]
+                    ,bi.[bid_info_id]
+                    ,bi.[bid_end]
+                    ,bi.[bid_start]
+
+                    FROM [dbo].[request_info] ri
+                    INNER JOIN
+                    contact_info company ON company.contact_id = ri.company_contact_id
+                    INNER JOIN
+                    contact_info delivery ON delivery.contact_id = ri.delivery_contact_id
+                    INNER JOIN 
+                    bid_info bi ON bi.bid_info_id = ri.bid_info_id
                     WHERE ri.request_info_id = @request_info_id";
                 connection.Open();
 
@@ -877,6 +880,7 @@ namespace Domain
                         Description = reader["description"] is DBNull ? String.Empty : (string)reader["description"],
                         DocumentInfo = reader["document_info"] is DBNull ? String.Empty : (string)reader["document_info"],
                         ClassName = reader["class_name"] is DBNull ? String.Empty : (string)reader["class_name"],
+                        VendorCanContact = (bool)reader["vendor_can_contact"],
 
                         BidInfo = new BidInfo()
                         {
@@ -919,13 +923,15 @@ namespace Domain
                     };
                 }
 
-                command.CommandText = @"SELECT [s_condition_name]
-                          ,ci.[s_condition_id]
-                      FROM [minebidz_iias_ca_sql].[dbo].[condition_info] ci
+                reader.Close();
+
+                command.CommandText = @"
+                    SELECT 
+                    [s_condition_name]
+                    ,ci.[s_condition_id]
+                    FROM [dbo].[condition_info] ci
                     INNER JOIN s_condition sc ON sc.s_condition_id = ci.s_condition_id
                     WHERE ci.request_info_id = @request_info_id";
-
-                reader.Close();
 
                 reader = command.ExecuteReader();
 
@@ -968,7 +974,7 @@ namespace Domain
 
 
                     command.CommandText =
-                    @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[bid]
+                    @"INSERT INTO [dbo].[bid]
                            ([UserId]
                            ,[contact_info_id]
                            ,[request_info_id]
@@ -1029,7 +1035,7 @@ namespace Domain
                     SqlParameter bid_id = new SqlParameter("@bid_id", bid.Id); command.Parameters.Add(bid_id);
 
                     command.CommandText =
-                    @"UPDATE [minebidz_iias_ca_sql].[dbo].[bid]
+                    @"UPDATE [dbo].[bid]
                         SET [description] = @description
                            ,[reference_number] = @reference_number
                         WHERE [bid_id] = @bid_id";
@@ -1070,7 +1076,7 @@ namespace Domain
             SqlParameter contact_id = new SqlParameter("@contact_id", contactInfo.Id); command.Parameters.Add(contact_id);
 
             command.CommandText =
-            @"UPDATE [minebidz_iias_ca_sql].[dbo].[contact_info]
+            @"UPDATE [dbo].[contact_info]
                 SET
                    [company_name] = @company_name
                    ,[contact_name] = @contact_name
@@ -1109,7 +1115,7 @@ namespace Domain
                     companyContactId = SaveContact(command, request.CompanyInfo);
                     command.Parameters.Clear();
 
-                    deliveryContactId = SaveContact(command, request.DeliveryInfo);
+                    deliveryContactId = companyContactId; // SaveContact(command, request.DeliveryInfo);
                     command.Parameters.Clear();
 
                     SqlParameter bid_name = new SqlParameter("@bid_name", (object)request.BidInfo.BidName ?? DBNull.Value); command.Parameters.Add(bid_name);
@@ -1118,7 +1124,7 @@ namespace Domain
 
 
                     command.CommandText =
-                    @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[bid_info]
+                    @"INSERT INTO [dbo].[bid_info]
                            ([bid_name]
                            ,[bid_end]
                             ,[bid_start])
@@ -1142,33 +1148,35 @@ namespace Domain
                     SqlParameter subcategory_id = new SqlParameter("@subcategory_id", request.SubcategoryId); command.Parameters.Add(subcategory_id);
                     SqlParameter description = new SqlParameter("@description", (object)request.Description ?? DBNull.Value); command.Parameters.Add(description);
                     SqlParameter document_info = new SqlParameter("@document_info", (object)request.DocumentInfo ?? DBNull.Value); command.Parameters.Add(document_info);
-
+                    SqlParameter vendor_can_contact = new SqlParameter("@vendor_can_contact", (object)request.VendorCanContact); command.Parameters.Add(vendor_can_contact);
 
                     command.CommandText =
-                    @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[request_info]
-                           ([UserId]
-                           ,[company_contact_id]
-                           ,[delivery_contact_id]
-                           ,[bid_info_id]
-                           ,[details_info]
-                           ,[approved]
-                            ,[class_name]
-                            ,[category_id]
-                            ,[subcategory_id]
-                            ,[description]
-                            ,[document_info])
+                    @"INSERT INTO [dbo].[request_info]
+                        ([UserId]
+                        ,[company_contact_id]
+                        ,[delivery_contact_id]
+                        ,[bid_info_id]
+                        ,[details_info]
+                        ,[approved]
+                        ,[class_name]
+                        ,[category_id]
+                        ,[subcategory_id]
+                        ,[description]
+                        ,[document_info]
+                        ,[vendor_can_contact])
                      VALUES
-                           (@UserId
-                           ,@company_contact_id 
-                           ,@delivery_contact_id 
-                           ,@bid_info_id 
-                           ,@details_info 
-                           ,@approved
-                           ,@class_name 
-                           ,@category_id 
-                           ,@subcategory_id
-                            ,@description
-                            ,@document_info);
+                        (@UserId
+                        ,@company_contact_id 
+                        ,@delivery_contact_id 
+                        ,@bid_info_id 
+                        ,@details_info 
+                        ,@approved
+                        ,@class_name 
+                        ,@category_id 
+                        ,@subcategory_id
+                        ,@description
+                        ,@document_info
+                        ,@vendor_can_contact);
                     SELECT CAST(@@IDENTITY AS INT) ";
 
                     requestId = (int)command.ExecuteScalar();
@@ -1181,7 +1189,7 @@ namespace Domain
                             SqlParameter request_info_id = new SqlParameter("@request_info_id", requestId); command.Parameters.Add(request_info_id);
                             SqlParameter s_condition_id = new SqlParameter("@s_condition_id", condition.Id); command.Parameters.Add(s_condition_id);
                             command.CommandText =
-                            @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[condition_info]
+                            @"INSERT INTO [dbo].[condition_info]
                                    ([request_info_id]
                                    ,[s_condition_id])
                              VALUES
@@ -1275,7 +1283,7 @@ namespace Domain
                         Id = reader.GetInt32(0),
                         Title = reader.GetString(1),
                         FormName = reader.GetString(2),
-                        ClassName = reader.GetString(3)
+                        EquipmentId = reader.GetString(3)
                     });
                 }
             }
@@ -1676,7 +1684,7 @@ namespace Domain
                     SqlParameter contact_info_id = new SqlParameter("@contact_info_id", companyContactId); UserId.IsNullable = true; command.Parameters.Add(contact_info_id);
 
                     command.CommandText =
-                    @"UPDATE [minebidz_iias_ca_sql].[dbo].[UserProfile]
+                    @"UPDATE [dbo].[UserProfile]
                        SET [contact_info_id] = @contact_info_id 
                      WHERE UserId = @UserId ";
 
@@ -1694,7 +1702,7 @@ namespace Domain
                         command.Parameters.Add(Approved);
 
                         command.CommandText =
-                        @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[webpages_UsersPackages]
+                        @"INSERT INTO [dbo].[webpages_UsersPackages]
                            ([UserId]
                            ,[PackageId]
                            ,[Approved]
@@ -1717,7 +1725,7 @@ namespace Domain
                         command.Parameters.Add(Approved);
 
                         command.CommandText =
-                        @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[webpages_UsersPackages]
+                        @"INSERT INTO [dbo].[webpages_UsersPackages]
                            ([UserId]
                            ,[PackageId]
                            ,[Approved]
@@ -1766,7 +1774,7 @@ namespace Domain
             SqlParameter email = new SqlParameter("@email", (object)contactInfo.Email ?? DBNull.Value); command.Parameters.Add(email);
 
             command.CommandText =
-            @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[contact_info]
+            @"INSERT INTO [dbo].[contact_info]
                    ([company_name]
                    ,[contact_name]
                    ,[street_address]
@@ -1804,8 +1812,8 @@ namespace Domain
 
                 command.CommandText =
                 @"SELECT TOP 1 * FROM 
-                [minebidz_iias_ca_sql].[dbo].[webpages_UsersPackages] up
-                INNER JOIN [minebidz_iias_ca_sql].[dbo].[s_webpages_Packages] p
+                [dbo].[webpages_UsersPackages] up
+                INNER JOIN [dbo].[s_webpages_Packages] p
                 ON up.PackageId = p.PackageId
                 WHERE GETDATE() BETWEEN up.StartDate AND up.EndDate
                 AND p.PackageTypeId = 2 AND up.Approved = 1
@@ -1858,7 +1866,7 @@ namespace Domain
 
 
                     command.CommandText =
-                    @"UPDATE [minebidz_iias_ca_sql].[dbo].[bid_info]
+                    @"UPDATE [dbo].[bid_info]
                        SET [bid_name] = @bid_name
                            ,[bid_end] = @bid_end
                             ,[bid_start] = @bid_start
@@ -1879,7 +1887,7 @@ namespace Domain
 
 
                     command.CommandText =
-                    @"UPDATE [minebidz_iias_ca_sql].[dbo].[request_info]
+                    @"UPDATE [dbo].[request_info]
                          SET  [details_info] = @details_info
                             ,[description] = @description
                             ,[document_info] = @document_info
@@ -1890,7 +1898,7 @@ namespace Domain
 
                     command.Parameters.Add(request_info_id);
                     command.CommandText =
-                            @"DELETE FROM [minebidz_iias_ca_sql].[dbo].[condition_info]
+                            @"DELETE FROM [dbo].[condition_info]
                               WHERE request_info_id = @request_info_id";
 
                     command.ExecuteNonQuery();
@@ -1903,7 +1911,7 @@ namespace Domain
                             command.Parameters.Add(request_info_id);
                             SqlParameter s_condition_id = new SqlParameter("@s_condition_id", condition.Id); command.Parameters.Add(s_condition_id);
                             command.CommandText =
-                            @"INSERT INTO [minebidz_iias_ca_sql].[dbo].[condition_info]
+                            @"INSERT INTO [dbo].[condition_info]
                                    ([request_info_id]
                                    ,[s_condition_id])
                              VALUES

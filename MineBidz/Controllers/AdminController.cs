@@ -43,12 +43,12 @@ namespace MineBidz.Controllers
                 RefNumber = String.Format("MBR#{0}", r.Id),
                 Subcategory = subCategoryList.FirstOrDefault(s => s.Id == r.SubcategoryId).Title,
                 Condition = String.Join("/", r.ConditionList.Select(c => c.Name).ToArray()),
-                FormName = requestFormList.FirstOrDefault(f => f.ClassName == r.ClassName).FormName,
+                FormName = requestFormList.FirstOrDefault(f => f.EquipmentId == r.ClassName).FormName,
                 BidName = r.BidInfo.BidName,
                 BidStart = r.BidInfo.BidStartDate.ToShortDateString(),
                 DocumentInfo = r.DocumentInfo,
                 Approved = r.Approved,
-                FormTitle = requestFormList.FirstOrDefault(f => f.ClassName == r.ClassName).Title
+                FormTitle = requestFormList.FirstOrDefault(f => f.EquipmentId == r.ClassName).Title
             }).OrderByDescending(r=>r.BidStart).ToList();
             return model;
         }
