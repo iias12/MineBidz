@@ -112,10 +112,15 @@ namespace MineBidz.Controllers
                 return View(model);
             }
 
-
             try
             {
-                string fileName = SaveDocument(model);
+                var file = model.EngineeringDesign;
+                string fileName = String.Empty;
+                if (file != null)
+                {
+                    fileName = String.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
+                    var result = Utilities.SaveDocument(model.EngineeringDesign, Path.Combine(Server.MapPath(Url.Content("~/Documents/")), fileName));
+                }
 
                 Bid bid = new Bid
                 {
@@ -310,16 +315,16 @@ namespace MineBidz.Controllers
             }
         }
 
-        private string SaveDocument(CreateBidViewModel model)
+        private string SaveDocument(HttpPostedFileBase file)
         {
 
             try
             {
-                if (model.EngineeringDesign != null && model.EngineeringDesign.ContentLength > 0)
+                if (file != null && file.ContentLength > 0)
                 {
-                    var fileName = String.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(model.EngineeringDesign.FileName));
+                    var fileName = String.Format("{0}{1}", Guid.NewGuid().ToString(), Path.GetExtension(file.FileName));
                     var path = Path.Combine(Server.MapPath(Url.Content("~/Documents/")), fileName);
-                    model.EngineeringDesign.SaveAs(path);
+                    file.SaveAs(path);
                     return fileName;
                 }
                 return null;

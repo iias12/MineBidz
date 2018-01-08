@@ -963,6 +963,12 @@ namespace Domain
                     contactId = SaveContact(command, bid.CompanyInfo);
                     command.Parameters.Clear();
 
+                    if (bid.CcPayment != null)
+                    {
+                        SaveCcPayment(command, bid.CcPayment);
+                        command.Parameters.Clear();
+                    }
+
                     SqlParameter UserId = new SqlParameter("@UserId", bid.UserId); command.Parameters.Add(UserId);
                     SqlParameter contact_info_id = new SqlParameter("@contact_info_id", contactId); command.Parameters.Add(contact_info_id);
                     SqlParameter request_info_id = new SqlParameter("@request_info_id", bid.RequestInfoId); command.Parameters.Add(request_info_id);
@@ -971,27 +977,33 @@ namespace Domain
                     SqlParameter accepted = new SqlParameter("@accepted", false); command.Parameters.Add(accepted);
                     SqlParameter reference_number = new SqlParameter("@reference_number", bid.ReferenceNumber); command.Parameters.Add(reference_number);
                     SqlParameter document_info = new SqlParameter("@document_info", (object)bid.EngineeringDesign ?? DBNull.Value); command.Parameters.Add(document_info);
-
+                    SqlParameter cc_payment_id = new SqlParameter("@cc_payment_id", bid.CcPayment == null ? DBNull.Value : (object)bid.CcPayment.PaymentId); command.Parameters.Add(cc_payment_id);
 
                     command.CommandText =
                     @"INSERT INTO [dbo].[bid]
-                           ([UserId]
+                           (
+                            [UserId]
                            ,[contact_info_id]
                            ,[request_info_id]
                            ,[amount]
                            ,[description]
                            ,[reference_number]
-                            ,[accepted]
-                    ,[document_info])
+                           ,[accepted]
+                            ,[document_info]
+                            ,[payment_id]
+                            )
                      VALUES
-                           (@UserId
+                           (
+                            @UserId
                            ,@contact_info_id
                            ,@request_info_id
                            ,@amount
                            ,@description
                            ,@reference_number
-                            ,@accepted
-                        ,@document_info)";
+                           ,@accepted
+                            ,@document_info
+                            ,@cc_payment_id
+                            )";
 
                     command.ExecuteNonQuery();
                     transaction.Commit();
@@ -1757,6 +1769,56 @@ namespace Domain
                     }
                 }
             }
+        }
+
+        private void SaveCcPayment(SqlCommand command, CcPayment payment)
+        {
+            SqlParameter payment_id = new SqlParameter("@payment_id", payment.PaymentId); command.Parameters.Add(payment_id);
+            SqlParameter amount = new SqlParameter("@amount", payment.Amount); command.Parameters.Add(amount);
+            SqlParameter cc_number = new SqlParameter("@cc_number", Utils.EncryptStringAes(payment.CreditCardNumber)); command.Parameters.Add(cc_number);
+            SqlParameter name_on_card = new SqlParameter("@name_on_card", payment.NameOnCard); command.Parameters.Add(name_on_card);
+            SqlParameter month = new SqlParameter("@month", payment.ExpirationMonth); command.Parameters.Add(month);
+            SqlParameter year = new SqlParameter("@year", payment.ExpirationYear); command.Parameters.Add(year);
+            SqlParameter cvv = new SqlParameter("@cvv", payment.SecurityCode); command.Parameters.Add(cvv);
+            SqlParameter street = new SqlParameter("@street", payment.StreetAddress); command.Parameters.Add(street);
+            SqlParameter city = new SqlParameter("@city", payment.City); command.Parameters.Add(city);
+            SqlParameter zip_postal = new SqlParameter("@zip_postal", (object)payment.PostalCode ?? DBNull.Value); command.Parameters.Add(zip_postal);
+            SqlParameter country = new SqlParameter("@country", payment.CountryCode); command.Parameters.Add(country);
+            SqlParameter province_state = new SqlParameter("@province_state", (object)payment.ProvinceStateCode ?? DBNull.Value); command.Parameters.Add(province_state);
+
+            command.CommandText =
+            @"INSERT INTO [dbo].[cc_payment]
+                (
+                    [payment_id]
+                    ,[amount]
+                    ,[cc_number]
+                    ,[name_on_card]
+                    ,[month]
+                    ,[year]
+                    ,[cvv]
+                    ,[street]
+                    ,[city]
+                    ,[zip_postal]
+                    ,[country]
+                    ,[province_state]
+                )
+             VALUES
+                (
+                    @payment_id
+                    ,@amount
+                    ,@cc_number
+                    ,@name_on_card 
+                    ,@month
+                    ,@year
+                    ,@cvv 
+                    ,@street 
+                    ,@city 
+                    ,@zip_postal 
+                    ,@country
+                    ,@province_state
+                )";
+
+            command.ExecuteNonQuery();
         }
 
         private int SaveContact(SqlCommand command, ContactInfo contactInfo)

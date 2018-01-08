@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web;
+using System.Web.Mvc;
 
 namespace MineBidz.Utility
 {
@@ -19,5 +21,23 @@ namespace MineBidz.Utility
             client.Credentials = new NetworkCredential("formhandler", "iiasform20981");
             client.Send(mail);
         }
+
+        public static bool SaveDocument(HttpPostedFileBase file, string path)
+        {
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    file.SaveAs(path);
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception fileExc)
+            {
+                return false;
+            }
+        }
+
     }
 }

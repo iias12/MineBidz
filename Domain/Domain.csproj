@@ -80,6 +80,7 @@
     <Compile Include="Repository.cs" />
     <Compile Include="RequestInfo.cs" />
     <Compile Include="Unit.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
