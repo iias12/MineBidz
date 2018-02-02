@@ -1,6 +1,7 @@
 ﻿using Domain;
 using MineBidz.Filters;
 using MineBidz.Models;
+using MineBidz.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,13 @@ namespace MineBidz.Controllers
         public ActionResult Index()
         {
             List<RequestInfoListViewModel> model = GetModel();
+
+            return View(model);
+        }
+
+        public ActionResult Quotes()
+        {
+            List<BidListViewModel> model = GetQuotesModel();
 
             return View(model);
         }
@@ -51,6 +59,46 @@ namespace MineBidz.Controllers
                 FormTitle = requestFormList.FirstOrDefault(f => f.EquipmentId == r.ClassName).Title
             }).OrderByDescending(r=>r.BidStart).ToList();
             return model;
+        }
+
+        private List<BidListViewModel> GetQuotesModel()
+        {
+            var requestList = repository.ListRequestInfoAdmin().ToList();
+            var quoteList = repository.GetQuotesListAdmin().Where(q => requestList.Select(r => r.Id).Contains(q.RequestInfoId)).ToList();
+
+            return quoteList.Select(q => new BidListViewModel
+            {
+                Accepted = q.Accepted,
+                Approved = q.Approved,
+                CompanyName = q.CompanyInfo.CompanyName,
+                ContactName = q.CompanyInfo.ContactName,
+                Description = q.Description,
+                DocumentInfo = q.EngineeringDesign,
+                Email = q.CompanyInfo.Email,
+                Id = q.Id,
+                Payment = new PaymentViewModel
+                {
+                    Amount = q.CcPayment.Amount,
+                    City = q.CcPayment.City,
+                    CountryCode = q.CcPayment.CountryCode,
+                    CreditCardNumber = q.CcPayment.CreditCardNumber,
+                    ExpirationMonth = q.CcPayment.ExpirationMonth,
+                    ExpirationYear = q.CcPayment.ExpirationYear,
+                    NameOnCard = q.CcPayment.NameOnCard,
+                    PaymentId = q.CcPayment.PaymentId,
+                    PostalCode = q.CcPayment.PostalCode,
+                    Processed = q.CcPayment.Processed,
+                    ProvinceStateCode = q.CcPayment.ProvinceStateCode,
+                    SecurityCode = q.CcPayment.SecurityCode,
+                    StreetAddress = q.CcPayment.StreetAddress
+                },
+                Phone = q.CompanyInfo.Phone,
+                RefNumber = q.ReferenceNumber,
+                RefNumberRequest = String.Format("MBR#{0}", q.RequestInfoId),
+                //RefNumberRequest = requestList.FirstOrDefault(r => r.Id == q.RequestInfoId)..BidInfo..BidName,
+                RequestDocumentInfo = requestList.FirstOrDefault(r => r.Id == q.RequestInfoId).DocumentInfo,
+                RequestInfoId = q.RequestInfoId
+            }).ToList();
         }
 
         public ActionResult Approve(int requestId, bool approved)
@@ -102,6 +150,106 @@ namespace MineBidz.Controllers
             repository.DeleteBidRequest(requestId);
             List<RequestInfoListViewModel> model = GetModel();
             return View("Index", model);
+        }
+
+        // GET: /Bids/Delete/5
+        public ActionResult DeleteQuote(int quoteId)
+        {
+            //delete logic here
+            repository.DeleteBid(quoteId);
+            return RedirectToAction("Quotes");
+        }
+
+        public ActionResult ApproveQuote(int quoteId, bool approved, int requestId)
+        {
+            repository.ApproveBid(quoteId, !approved);
+            
+            if (!approved)
+            {                    
+                var body = String.Empty;
+                var subject = "New Quote for " + "MBR#" + requestId;
+
+                var request = repository.GetRequestInfo(requestId);
+                var quote = repository.GetBid(quoteId);
+
+
+                try
+                {
+
+                    body = "Your Request got a quote from " + quote.CompanyInfo.CompanyName;
+                    if (String.IsNullOrEmpty(request.DocumentInfo))
+                    {
+                        body += "No document provided";
+                    }
+                    else
+                    {
+                        body += " <a href=\"" + String.Format("http://minebidz.com/Documents/{0}", quote.EngineeringDesign) + "\"  target=\"_blank\">Bid Document</a>";
+                    }
+                    body += " Vendor e-mail " + quote.CompanyInfo.Email;
+                    body += " Vendor phone " + quote.CompanyInfo.Phone;
+                    body += " Contact name " + quote.CompanyInfo.ContactName;
+                    try
+                    {
+                        Utilities.SendMail("serguei.razykov@gmail.com", subject, body);
+                    }
+                    catch { }
+                    try
+                    {
+                        Utilities.SendMail("info@minebidz.com", subject, body);
+                    }
+                    catch { }
+                    try
+                    {
+                        Utilities.SendMail(request.CompanyInfo.Email, subject, body);
+                    }
+                    catch { }
+
+                }
+                catch
+                {
+                }
+
+                body = "You Quote for " + "MBR#" + requestId + "  has bee approved and forwarded to the requestor";
+                subject = "You Quote for " + "MBR#" + requestId + "  has been approved";
+
+                if (request.VendorCanContact)
+                {
+                    body += " Requestor e-mail " + request.CompanyInfo.Email;
+                    body += " Vendor phone " + request.CompanyInfo.Phone;
+                    body += " Contact name " + request.CompanyInfo.ContactName;
+                }
+                try
+                {
+                    Utilities.SendMail("serguei.razykov@gmail.com", subject, body);
+                }
+                catch { }
+                try
+                {
+                    Utilities.SendMail("info@minebidz.com", subject, body);
+                }
+                catch { }
+                try
+                {
+                    Utilities.SendMail(quote.CompanyInfo.Email, subject, body);
+                }
+                catch { }
+
+
+            }
+
+            var model = GetQuotesModel();
+            return RedirectToAction("Quotes");
+        }
+
+        public ActionResult MarkPaymentProcessed(Guid paymentId, bool processed)
+        {
+            if (processed)
+            {
+                return RedirectToAction("Quotes");
+            }
+            //approve logic here
+            repository.MarkPaymentProcessed(paymentId, processed);
+            return RedirectToAction("Quotes");
         }
 
     }

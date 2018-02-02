@@ -15,8 +15,7 @@
                 <ul id="menu" style="text-align: center">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Requests", "Index", "Admin")</li>
-                    <li>@Html.ActionLink("Bids", "Index", "Bids")</li>
-                    <li>@Html.ActionLink("Packages", "Packages", "Admin")</li>
+                    <li>@Html.ActionLink("Quotes", "Quotes", "Admin")</li>
                     @Html.Partial("_LoginPartial")
                 </ul>
             </nav>
@@ -33,9 +32,8 @@
             <div id="bottom-menu" style="padding-top: 20px">
                 <div id="bottom-menu-1" style="float: left; width: 250px">
                     <div>@Html.ActionLink("Home", "Index", "Home")</div>
-                    <div>@Html.ActionLink("Services", "Services", "Home")</div>
-                    <div>@Html.ActionLink("About Us", "About", "Home")</div>
-                    <div>@Html.ActionLink("Contact Us", "Contact", "Home")</div>
+                    <div>@Html.ActionLink("Requests", "Index", "Admin")</div>
+                    <div>@Html.ActionLink("Quotes", "Quotes", "Admin")</div>
                 </div>
                 <div id="bottom-menu-2" style="float: left; width: 250px">
                     <div><a href="@Url.Content("~/Images/PDF/Privacy Policy REV1.pdf")">Privacy Policy</a></div>

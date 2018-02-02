@@ -29,11 +29,42 @@
     });
 </script>
 
+<hgroup class="title" style='height: 55px; width: 880px; margin-bottom:0px; background: url("@Url.Content("~/Images/Account/title-register-1.png")")'>
+</hgroup>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
+    <div  style='height: 513px; float:left; width: 196px; background: url("@Url.Content("~/Images/Account/logo-size-group-2.png")")'></div>
+    <div style="height: 495px; float: left; width: 30px; padding-left:5px">
+        <div style="height: 170px; width: 30px; vertical-align: central">
+            @Html.RadioButton("LogoPackageId", 1, new { @style = "width:20px;height: 170px;" })
+        </div>
+        <div style="height: 140px; width: 30px">
+            @Html.RadioButton("LogoPackageId", 2, new { @style = "width:20px;height: 140px;" })
+        </div>
+        <div style="height: 90px; width: 30px">
+            @Html.RadioButton("LogoPackageId", 3, new { @style = "width:20px;height: 90px;" })
+        </div>
+        <div style="height: 100px; width: 30px">
+            @Html.RadioButton("LogoPackageId", 4, new { @style = "width:20px;height: 100px;" })
+        </div>
+    </div>
+    <div style='height: 495px; float: left; width: 264px; background: url("@Url.Content("~/Images/Account/logo-option-text-group-1.png")") no-repeat'></div>
+    <div  style='height: 495px; float:left; width: 154px; background: url("@Url.Content("~/Images/Account/box-size-group-1.png")")'></div>
+    <div style="height: 495px; float: left; width: 30px;">
+        <div style="height: 175px; width: 40px; vertical-align: central">
+            @Html.RadioButton("BiddingPackageId", 5, new { @style = "width:20px;height: 175px;" })
+        </div>
+        <div style="height: 30px; width: 30px">
+            @Html.RadioButton("BiddingPackageId", 6, new { @style = "width:20px;height: 30px;" })
+        </div>
+    </div>
+    <div  style='height: 495px; float:left; width: 175px; background: url("@Url.Content("~/Images/Account/bid-option-text-group-1.png")")'></div>
+    <div style='height: 45px; clear:both; width: 880px; padding-left:15px; padding-top:15px; font-weight:800'>*All prices in USD</div>
+    <div style='height: 45px; clear:both; width: 880px; background: url("@Url.Content("~/Images/Account/title-company-info-1.png")")'></div>
     <div>
         <div style="float: left; padding-left: 10px">
             @Html.LabelFor(m => m.CompanyInfo.CompanyName, "Company Name")
@@ -105,6 +136,14 @@
     </div>
     <div style="clear: both; padding-left: 20px; font-family: Verdana; font-size: x-large; font-weight: bold; color: #b15c0a">Payment Info</div>
     <div style="padding-left: 10px; padding-top: 15px">
+        <div style="height: 30px; width: 200px; float: left">
+            @Html.Label("", "PayPal", new { @style = "float:left" })
+            @Html.RadioButton("PaymentTypeId", 1, new { @style = "width:15px; height: 15px; margin-left:15px" })
+        </div>
+        <div style="height: 30px; width: 180px; float: left">
+            @Html.Label("", "Check", new { @style = "float:left" })
+            @Html.RadioButton("PaymentTypeId", 2, new { @style = "width:15px;height: 15px;; margin-left:15px" })
+        </div>
         <div style="height: 30px; float: left">
             @Html.CheckBoxFor(m => m.Acknowledged, new { @style = "width:20px; height:20px; float:left" })
             @Html.LabelFor(m => m.Acknowledged, "I agree with ", new { @style = "float:left; padding-left:10px" })<a style="float:left; padding-left:10px" href="@Url.Content("~/Images/PDF/Terms of Service for Users REV1.pdf")" target="_blank">Terms and Conditions</a>

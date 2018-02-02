@@ -41,18 +41,17 @@
             {
                 @Html.ActionLink("HOME", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
                 @Html.ActionLink("REQUESTS", "Index", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
-                @Html.ActionLink("BIDS", "Index", "Bids", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
-                @Html.ActionLink("PACKAGES", "Packages", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("Quotes", "Quotes", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
                 @Html.Partial("_LoginPartial")
             }
             else
             {
                 @Html.ActionLink("HOME", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
-                @Html.ActionLink("SERVICES", "Services", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
-                @Html.ActionLink("ABOUT US", "About", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
-                @Html.ActionLink("CONTACT", "Contact", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("OVERVIEW", "Overview", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
                 @Html.Partial("_LoginPartial")
-                @Html.ActionLink("POST A BID REQUEST", "Index", "Forms", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center", @style = "background: url(@Url.Content('~/Images/Layout/post-a-bid-background.png')) no-repeat" })
+                @Html.ActionLink("POST A REQUEST", "Index", "Forms", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center", @style = "background: url(@Url.Content('~/Images/Layout/post-a-bid-background.png')) no-repeat" })
+                @Html.ActionLink("FAQ", "Faq", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("CONTACT", "Contact", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
             }
         </div>
     </nav>
@@ -64,10 +63,23 @@
 
     <footer id="myFooter" class="w3-row  w3-theme-l2" style="margin-top: 10px;">
         <div class="w3-container w3-center">
-            @Html.ActionLink("Home", "Index", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
-            @Html.ActionLink("Services", "Services", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
-            @Html.ActionLink("About Us", "About", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
-            @Html.ActionLink("Contact Us", "Contact", "Home", new { @class = "w3-container w3-button w3-hover-white w3-center" })
+            @if (WebSecurity.IsAuthenticated && (WebSecurity.CurrentUserId == 6 || WebSecurity.CurrentUserId == 1))
+            {
+                @Html.ActionLink("HOME", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("REQUESTS", "Index", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("Quotes", "Quotes", "Admin", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.Partial("_LoginPartial")
+            }
+            else
+            {
+                @Html.ActionLink("HOME", "Index", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("OVERVIEW", "Overview", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.Partial("_LoginPartial")
+                @Html.ActionLink("POST A REQUEST", "Index", "Forms", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center", @style = "background: url(@Url.Content('~/Images/Layout/post-a-bid-background.png')) no-repeat" })
+                @Html.ActionLink("FAQ", "Faq", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+                @Html.ActionLink("CONTACT", "Contact", "Home", routeValues: null, htmlAttributes: new { @class = "w3-container w3-button w3-hover-white w3-center" })
+            }
+
         </div>
         <div class="w3-container w3-right">
             <div><a href="@Url.Content("~/Images/PDF/Privacy Policy REV1.pdf")" target="_blank">Privacy Policy</a></div>

@@ -31,5 +31,6 @@ namespace MineBidz.Models
         public string CountryCode { get; set; }
         [Required(ErrorMessage = "Postal Code is required")]
         public string PostalCode { get; set; }
+        public bool Processed { get; set; }
     }
 }

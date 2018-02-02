@@ -19,7 +19,11 @@ namespace MineBidz.Utility
             // Add credentials if the SMTP server requires them.
             //client.Credentials = CredentialCache.DefaultNetworkCredentials;
             client.Credentials = new NetworkCredential("formhandler", "iiasform20981");
+#if DEBUG
+            //client.Send(mail);
+#else
             client.Send(mail);
+#endif
         }
 
         public static bool SaveDocument(HttpPostedFileBase file, string path)

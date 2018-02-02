@@ -53,6 +53,20 @@ namespace MineBidz.Controllers
             return View();
         }
 
+        public ActionResult Overview()
+        {
+            ViewBag.Message = "Overview";
+
+            return View();
+        }
+
+        public ActionResult Faq()
+        {
+            ViewBag.Message = "FAQ";
+
+            return View();
+        }
+
         public ActionResult Services()
         {
             ViewBag.Message = "Your app description page.";

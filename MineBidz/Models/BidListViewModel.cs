@@ -12,6 +12,7 @@ namespace MineBidz.Models
         public string RefNumber { get; set; }
         public string RefNumberRequest { get; set; }
         public string DocumentInfo { get; set; }
+        public string RequestDocumentInfo { get; set; }
         public string Description { get; set; }
         public bool Approved { get; set; }
         public bool Accepted { get; set; }
@@ -19,5 +20,6 @@ namespace MineBidz.Models
         public string ContactName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public PaymentViewModel Payment { get; set; }
     }
 }

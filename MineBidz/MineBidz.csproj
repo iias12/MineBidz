@@ -515,6 +515,10 @@
     <Content Include="Views\Guest\PartialQuoteInfo.cshtml" />
     <Content Include="Views\Guest\PartialPaymentInfo.cshtml" />
     <Content Include="Views\Guest\Confirmation.cshtml" />
+    <Content Include="Views\Home\Overview.cshtml" />
+    <Content Include="Views\Home\Faq.cshtml" />
+    <Content Include="Views\Account\Copy of Register.cshtml" />
+    <Content Include="Views\Admin\Quotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

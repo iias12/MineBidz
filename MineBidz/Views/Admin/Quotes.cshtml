@@ -1,0 +1,78 @@
+﻿@model List<MineBidz.Models.BidListViewModel>
+
+@{
+    ViewBag.Title = "Quotes";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Quotes</h2>
+
+<div style="margin: 0 auto; overflow: auto">
+    <table style="width: 100%; border-bottom: solid thin; border-top: solid thin;">
+        <tr style="font-weight: 800">
+            <td>Request #</td>
+            <td>Quote #</td>
+            <td>Description</td>
+            <td>Company Name</td>
+            <td>Contact Name</td>
+            <td>Email</td>
+            <td>Phone</td>
+            <td>Document</td>
+            <td>Request document</td>
+            <td>Approved</td>
+            <td>CC Number</td>
+            <td>Name on card</td>
+            <td>Expiration</td>
+            <td>CVV</td>
+            <td>Amount</td>
+            <td>Payment Processed</td>
+            <td>Actions</td>
+        </tr>
+        @foreach (MineBidz.Models.BidListViewModel f in Model)
+        {
+            <tr style="border-top: solid thin;">
+                <td>@f.RefNumberRequest</td>
+                <td>@f.RefNumber</td>
+                <td>@f.Description</td>
+                <td>@f.CompanyName</td>
+                <td>@f.ContactName</td>
+                <td>@f.Email</td>
+                <td>@f.Phone</td>
+                <td>
+                    @if (!String.IsNullOrEmpty(f.DocumentInfo))
+                    {
+                        <a href="@Url.Content(String.Format("~/Documents/{0}", f.DocumentInfo))"  target="_blank">Document</a>
+                    }
+                    else
+                    {
+                        <p>None</p>
+                    }
+                </td>
+                <td>
+                    @if (!String.IsNullOrEmpty(f.RequestDocumentInfo))
+                    {
+                        <a href="@Url.Content(String.Format("~/Documents/{0}", f.RequestDocumentInfo))"  target="_blank">Request Document</a>
+                    }
+                    else
+                    {
+                        <p>None</p>
+                    }
+                </td>
+                <td>@Html.CheckBox(String.Format("Approved_{0}", f.Id), f.Approved, new { @disabled = "disabled" })</td>
+                <td>@f.Payment.CreditCardNumber</td>
+                <td>@f.Payment.NameOnCard</td>
+                <td>@f.Payment.ExpirationMonth / @f.Payment.ExpirationYear</td>
+                <td>@f.Payment.SecurityCode</td>
+                <td>@f.Payment.Amount</td>
+                <td>@Html.CheckBox(String.Format("Processed_{0}", f.Payment.PaymentId), f.Payment.Processed, new { @disabled = "disabled" })</td>
+                <td>
+                    @Html.RouteLink(f.Approved?"Disapprove":"Approve", new { controller = "Admin", action = "ApproveQuote", quoteId = f.Id, approved=f.Approved, requestId = f.RequestInfoId, document = f.DocumentInfo })
+                    @Html.RouteLink("Delete", new { controller = "Admin", action = "DeleteQuote", quoteId = f.Id })
+                    @Html.RouteLink(f.Payment.Processed?"Payment Processed":"Mark Payment Processed", new { controller = "Admin", action = "MarkPaymentProcessed", paymentId = f.Payment.PaymentId, processed=f.Payment.Processed })
+                    @Html.RouteLink("Review", new { controller = "Bids", action = "Edit", id = f.Id })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

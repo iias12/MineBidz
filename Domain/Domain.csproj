@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Bid.cs" />
     <Compile Include="BidInfo.cs" />
+    <Compile Include="CcPayment.cs" />
     <Compile Include="Concrete\Classification.cs" />
     <Compile Include="Concrete\Common\TankScreenCommon.cs" />
     <Compile Include="Concrete\Common\Product.cs" />

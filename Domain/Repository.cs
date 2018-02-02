@@ -252,6 +252,96 @@ namespace Domain
             return list;
         }
 
+        public IEnumerable<Bid> GetQuotesListAdmin()
+        {
+            List<Bid> list = new List<Bid>();
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+
+                command.CommandText = @"SELECT 
+                    quote.[bid_id]
+                    ,quote.[UserId]
+                    ,quote.[description]
+                    ,quote.[reference_number]
+                    ,quote.[accepted]
+                    ,quote.[document_info]
+                    ,quote.[approved]
+                    ,quote.[request_info_id]
+
+                    ,contact.[company_name]
+                    ,contact.[contact_name]
+                    ,contact.[phone]
+                    ,contact.[mobile]
+                    ,contact.[email]
+
+                    ,payment.[payment_id]
+                    ,payment.[amount]                     
+                    ,payment.[cc_number]
+                    ,payment.[name_on_card]
+                    ,payment.[month]
+                    ,payment.[year]
+                    ,payment.[cvv]
+                    ,payment.[street]
+                    ,payment.[city]
+                    ,payment.[zip_postal]
+                    ,payment.[country]
+                    ,payment.[province_state]
+                    ,payment.[processed]
+                    FROM [dbo].[bid] quote
+                    INNER JOIN
+                    contact_info contact ON contact.contact_id = quote.[contact_info_id]
+                    INNER JOIN
+                    [dbo].[cc_payment] payment ON payment.[payment_id] = quote.[payment_id]
+                    WHERE quote.deleted = 0";
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    list.Add(
+                    new Bid
+                    {
+                        Id = reader.GetInt32(0),
+                        Accepted = (bool)reader["accepted"],
+                        Approved = (bool)reader["approved"],
+                        CcPayment = new CcPayment
+                        {
+                            Amount = (decimal)reader["amount"],
+                            City = (string)reader["city"],
+                            CountryCode = (string)reader["country"],
+                            CreditCardNumber = Utils.DecryptStringFromBytes_Aes((string)reader["cc_number"]),
+                            ExpirationMonth = (Byte)reader["month"],
+                            ExpirationYear = (Int16)reader["year"],
+                            NameOnCard = (string)reader["name_on_card"],
+                            PaymentId = (Guid)reader["payment_id"],
+                            PostalCode = (string)reader["zip_postal"],
+                            Processed = reader["processed"] is DBNull ? false : (bool)reader["processed"],
+                            ProvinceStateCode = (string)reader["province_state"],
+                            SecurityCode = ((Int16)reader["cvv"]).ToString(),
+                            StreetAddress = (string)reader["street"]
+                        },
+                        CompanyInfo = new ContactInfo
+                        {
+                            CompanyName = (string)reader["company_name"],
+                            ContactName = (string)reader["contact_name"],
+                            Email = reader["email"] is DBNull ? String.Empty : (string)reader["email"],
+                            Mobile = reader["mobile"] is DBNull ? String.Empty : (string)reader["mobile"],
+                            Phone = reader["phone"] is DBNull ? String.Empty : (string)reader["phone"],
+                        },
+                        Description = reader["description"] is DBNull ? String.Empty : (string)reader["description"],
+                        EngineeringDesign = reader["document_info"] is DBNull ? String.Empty : (string)reader["document_info"],
+                        ReferenceNumber = reader["reference_number"] is DBNull ? String.Empty : (string)reader["reference_number"],
+                        RequestInfoId = (int)reader["request_info_id"],
+                        UserId = reader["UserId"] is DBNull ? 0 : (int)reader["UserId"]
+                    });
+                }
+            }
+
+            return list;
+        }
+
         public IEnumerable<RequestInfo> ListRequestInfoAdmin()
         {
             List<Condition> conditionList = ListCondition().ToList();
@@ -753,6 +843,21 @@ namespace Domain
                 @"UPDATE bid SET  approved = @approved_par WHERE bid_id = @bid_id";
                 connection.Open();
 
+                command.ExecuteNonQuery();
+            }
+
+        }
+
+        public void MarkPaymentProcessed(Guid paymentId, bool processed)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                SqlCommand command = connection.CreateCommand();
+                SqlParameter payment_id = new SqlParameter("@payment_id", paymentId); command.Parameters.Add(payment_id);
+
+                command.CommandText =
+                @"UPDATE [dbo].[cc_payment] SET [processed] = 1, [cc_number] = '', [cvv] = 0 WHERE [payment_id] = @payment_id";
+                connection.Open();
                 command.ExecuteNonQuery();
             }
         }

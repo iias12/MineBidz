@@ -135,44 +135,6 @@ namespace MineBidz.Controllers
                 repository.SaveBid(bid);
                 // TODO: Add insert logic here
 
-                RequestInfo request = repository.GetRequestInfo(model.RequestInfo.RequestInfoId);
-
-                try
-                {
-                    string body = "Your Bid Request got a bid! " + "<a href=\"" + Url.Content(String.Format("~/Documents/{0}", fileName)) + "\"  target=\"_blank\">Bid Document</a>";
-                    string subject = "New Bid for " + "MBR#" + model.RequestInfo.RequestInfoId ;
-
-                    body = "Your Bid Request got a bid! "; 
-                    if (String.IsNullOrEmpty(fileName))
-                    {
-                        body += "No document provided";
-                    }
-                    else
-                    {
-                        body +="<a href=\"" + String.Format("http://minebidz.com/Documents/{0}", fileName) + "\"  target=\"_blank\">Bid Document</a>";
-                    }
-                    body +=  " bidder e-mail " + model.CompanyInfo.Email;
-                    try
-                    {
-                        Utilities.SendMail("serguei.razykov@gmail.com", subject, body);
-                    }
-                    catch { }
-                    try
-                    {
-                        Utilities.SendMail("info@minebidz.com", subject, body);
-                    }
-                    catch { }
-                    try
-                    {
-                        Utilities.SendMail(request.CompanyInfo.Email, subject, body);
-                    }
-                    catch { }
-
-                }
-                catch
-                {
-                }
-
                 return RedirectToAction("Index", "Home");
             }
             catch(Exception ex)
