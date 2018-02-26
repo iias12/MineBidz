@@ -19,27 +19,27 @@
                 </div>
             </div>
         </div>
-        <div id="bidMain" style="float: left; margin-top: 5px">
+        <div id="bidMain" style="float: left">
             <div id="bidtitle" style="float: left">
-                <div style="float: left; padding-top: 5px">
+                <div style="float: left">
                     @Html.LabelFor(m => m.BidInfo.BidName, "Title")
                     @Html.TextBoxFor(m => m.BidInfo.BidName)
                 </div>
-                <div style="float: left; margin-left: 5px; padding-top: 5px">
+                <div style="float: left; margin-left: 5px">
                     @Html.LabelFor(m => m.BidInfo.BidName, "Closing Date")
                     @Html.TextBoxFor(m => m.BidInfo.BidEndDate, new { @class = "datePickerBidEndDate", @Value = (Model.BidInfo.BidEndDate.Year == 1 ? "" : Model.BidInfo.BidEndDate.ToShortDateString()), @style = "width:100px" })
                 </div>
             </div>
             <div id="conditions" style="float: left; margin-left: 30px;">
-                <div style="float: left; margin-left: 15px; padding-top: 5px">
+                <div style="float: left; margin-left: 15px">
                     @Html.LabelFor(m => m.New, new { @style = "width:30px" })
                     @Html.CheckBoxFor(m => m.New)
                 </div>
-                <div style="float: left; margin-left: 15px; padding-top: 5px">
+                <div style="float: left; margin-left: 15px">
                     @Html.LabelFor(m => m.Used, new { @style = "width:35px;" })
                     @Html.CheckBoxFor(m => m.Used)
                 </div>
-                <div style="float: left; margin-left: 15px; padding-top: 5px">
+                <div style="float: left; margin-left: 15px">
                     @Html.LabelFor(m => m.Rental, new { @style = "width:45px" })
                     @Html.CheckBoxFor(m => m.Rental)
                 </div>
@@ -48,7 +48,7 @@
         <div id="description" style="clear: both; padding-top: 5px">
             <fieldset>
                 <legend></legend>
-                <div style="margin-left: 10px; padding-top: 5px">Choose one of the following (<span style="color:red">Please do not include any logo’s or company information with quote request</span>)</div>
+                <div style="margin-left: 10px; padding-top: 5px">Choose one of the following (<span style="color: red">Please do not include any logo’s or company information with quote request</span>)</div>
                 <div style="margin-left: 5px">
                     <div style="float: left; padding-top: 5px">
                         @Html.Label("file", "File Upload:")
@@ -61,7 +61,7 @@
                 </div>
             </fieldset>
         </div>
-        <div style="clear: both; padding-top: 5px">
+        <div style="clear: both; padding-top: 5px; height: 75px">
             <div style="float: left; margin-left: 10px">
                 @Html.LabelFor(m => m.VendorCanContact, "Allow Vendors to view contact information regarding this request.", new { @style = "float:left" })
                 @Html.CheckBoxFor(m => m.VendorCanContact, new { @style = "float:left" })
@@ -71,6 +71,8 @@
                 <a href="@Url.Content("~/Images/PDF/Terms of Service for Users REV1.pdf")" target="_blank" style="float:left; margin-left:5px">Terms and Conditions</a>
                 @Html.CheckBoxFor(m => m.Acknowledged, new { @style = "float:left" })
             </div>
+            <div class="g-recaptcha" style="padding-left: 10px; height: 30px; float: left" data-sitekey="6LfV_0YUAAAAALvqip8KO0zc0YHX5OAFF4BOJzqn"></div>
+
         </div>
 
     </fieldset>

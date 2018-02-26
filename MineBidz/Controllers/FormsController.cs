@@ -12,6 +12,7 @@ using MineBidz.Models.Concrete;
 using MineBidz.Utility;
 using Newtonsoft.Json;
 using WebMatrix.WebData;
+using Json;
 
 namespace MineBidz.Controllers
 {
@@ -121,59 +122,74 @@ namespace MineBidz.Controllers
         [HttpPost]
         public ActionResult Create(CreateFormViewModel model)
         {
-            var requestForm = Request.Form;
-            var keys = requestForm.AllKeys.Where(x => x.StartsWith("DetailsInfo")).ToList();
-            var form = repository.GetForm(model.EquipmentId);
-            string details = String.Empty;
+            var reCaptchaResponse = Utilities.RecaptchaVerificationString(Request.Form["g-recaptcha-response"]);
+            var captchaResult = JsonParser.Deserialize<ReCaptchaResponse>(reCaptchaResponse);
 
-            switch (form.FormName)
+            if (!captchaResult.Success)
             {
-                case "Adr":
-                    details = JsonHelper.JsonSerialize<Adr>(MapForm<Adr>(requestForm)); break;
-                case "Cip":
-                    details = JsonHelper.JsonSerialize<Cip>(MapForm<Cip>(requestForm)); break;
-                case "Classification":
-                    details = JsonHelper.JsonSerialize<Classification>(MapForm<Classification>(requestForm)); break;
-                case "Crushers":
-                    details = JsonHelper.JsonSerialize<Crushers>(MapForm<Crushers>(requestForm)); break;
-                case "Dewatering":
-                    details = JsonHelper.JsonSerialize<Dewatering>(MapForm<Dewatering>(requestForm)); break;
-                case "Excavator":
-                    details = JsonHelper.JsonSerialize<Excavator>(MapForm<Excavator>(requestForm)); break;
-                case "FilterCloths":
-                    details = JsonHelper.JsonSerialize<FilterCloths>(MapForm<FilterCloths>(requestForm)); break;
-                case "GenericECE":
-                    details = JsonHelper.JsonSerialize<GenericECE>(MapForm<GenericECE>(requestForm)); break;
-                case "GenericEngineering":
-                    details = JsonHelper.JsonSerialize<GenericEngineering>(MapForm<GenericEngineering>(requestForm)); break;
-                case "HaulTruck":
-                    details = JsonHelper.JsonSerialize<HaulTruck>(MapForm<HaulTruck>(requestForm)); break;
-                case "Loader":
-                    details = JsonHelper.JsonSerialize<Loader>(MapForm<Loader>(requestForm)); break;
-                case "Mill":
-                    details = JsonHelper.JsonSerialize<Mill>(MapForm<Mill>(requestForm)); break;
-                case "OtherConsumables":
-                    details = JsonHelper.JsonSerialize<OtherConsumables>(MapForm<OtherConsumables>(requestForm)); break;
-                case "OtherEquipment":
-                    details = JsonHelper.JsonSerialize<OtherEquipment>(MapForm<OtherEquipment>(requestForm)); break;
-                case "Pipe":
-                    details = JsonHelper.JsonSerialize<Pipe>(MapForm<Pipe>(requestForm)); break;
-                case "ProcessPlants":
-                    details = JsonHelper.JsonSerialize<ProcessPlants>(MapForm<ProcessPlants>(requestForm)); break;
-                case "Pump":
-                    details = JsonHelper.JsonSerialize<Pump>(MapForm<Pump>(requestForm)); break;
-                case "Screen":
-                    details = JsonHelper.JsonSerialize<Screen>(MapForm<Screen>(requestForm)); break;
-                case "Tractors":
-                    details = JsonHelper.JsonSerialize<Tractors>(MapForm<Tractors>(requestForm)); break;
-                case "Vehicle":
-                    details = JsonHelper.JsonSerialize<Vehicle>(MapForm<Vehicle>(requestForm)); break;
-                case "Ventilation":
-                    details = JsonHelper.JsonSerialize<Ventilation>(MapForm<Ventilation>(requestForm)); break;
-                default:
-                    details = String.Empty; break;
+                ModelState.AddModelError("", "ReCapthca failed");
             }
-            return SaveRequest(model, details);
+
+            if (ModelState.IsValid)
+            {
+                var requestForm = Request.Form;
+                var keys = requestForm.AllKeys.Where(x => x.StartsWith("DetailsInfo")).ToList();
+                var form = repository.GetForm(model.EquipmentId);
+                string details = String.Empty;
+
+                switch (form.FormName)
+                {
+                    case "Adr":
+                        details = JsonHelper.JsonSerialize<Adr>(MapForm<Adr>(requestForm)); break;
+                    case "Cip":
+                        details = JsonHelper.JsonSerialize<Cip>(MapForm<Cip>(requestForm)); break;
+                    case "Classification":
+                        details = JsonHelper.JsonSerialize<Classification>(MapForm<Classification>(requestForm)); break;
+                    case "Crushers":
+                        details = JsonHelper.JsonSerialize<Crushers>(MapForm<Crushers>(requestForm)); break;
+                    case "Dewatering":
+                        details = JsonHelper.JsonSerialize<Dewatering>(MapForm<Dewatering>(requestForm)); break;
+                    case "Excavator":
+                        details = JsonHelper.JsonSerialize<Excavator>(MapForm<Excavator>(requestForm)); break;
+                    case "FilterCloths":
+                        details = JsonHelper.JsonSerialize<FilterCloths>(MapForm<FilterCloths>(requestForm)); break;
+                    case "GenericECE":
+                        details = JsonHelper.JsonSerialize<GenericECE>(MapForm<GenericECE>(requestForm)); break;
+                    case "GenericEngineering":
+                        details = JsonHelper.JsonSerialize<GenericEngineering>(MapForm<GenericEngineering>(requestForm)); break;
+                    case "HaulTruck":
+                        details = JsonHelper.JsonSerialize<HaulTruck>(MapForm<HaulTruck>(requestForm)); break;
+                    case "Loader":
+                        details = JsonHelper.JsonSerialize<Loader>(MapForm<Loader>(requestForm)); break;
+                    case "Mill":
+                        details = JsonHelper.JsonSerialize<Mill>(MapForm<Mill>(requestForm)); break;
+                    case "OtherConsumables":
+                        details = JsonHelper.JsonSerialize<OtherConsumables>(MapForm<OtherConsumables>(requestForm)); break;
+                    case "OtherEquipment":
+                        details = JsonHelper.JsonSerialize<OtherEquipment>(MapForm<OtherEquipment>(requestForm)); break;
+                    case "Pipe":
+                        details = JsonHelper.JsonSerialize<Pipe>(MapForm<Pipe>(requestForm)); break;
+                    case "ProcessPlants":
+                        details = JsonHelper.JsonSerialize<ProcessPlants>(MapForm<ProcessPlants>(requestForm)); break;
+                    case "Pump":
+                        details = JsonHelper.JsonSerialize<Pump>(MapForm<Pump>(requestForm)); break;
+                    case "Screen":
+                        details = JsonHelper.JsonSerialize<Screen>(MapForm<Screen>(requestForm)); break;
+                    case "Tractors":
+                        details = JsonHelper.JsonSerialize<Tractors>(MapForm<Tractors>(requestForm)); break;
+                    case "Vehicle":
+                        details = JsonHelper.JsonSerialize<Vehicle>(MapForm<Vehicle>(requestForm)); break;
+                    case "Ventilation":
+                        details = JsonHelper.JsonSerialize<Ventilation>(MapForm<Ventilation>(requestForm)); break;
+                    default:
+                        details = String.Empty; break;
+                }
+                return SaveRequest(model, details);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Forms");
+            }
         }
 
         private T MapForm<T>(System.Collections.Specialized.NameValueCollection requestForm) where T : new()

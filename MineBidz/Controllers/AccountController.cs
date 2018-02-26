@@ -12,6 +12,9 @@ using MineBidz.Filters;
 using MineBidz.Models;
 using Domain;
 using MineBidz.Utility;
+using System.Net;
+using System.Net.Http;
+using Json;
 
 namespace MineBidz.Controllers
 {
@@ -88,6 +91,15 @@ namespace MineBidz.Controllers
             {
                 ModelState.AddModelError("", "You must agree with terms and conditions");
             }
+
+            var reCaptchaResponse = Utilities.RecaptchaVerificationString(Request.Form["g-recaptcha-response"]);
+            var captchaResult = JsonParser.Deserialize<ReCaptchaResponse>(reCaptchaResponse);
+
+            if (!captchaResult.Success)
+            {
+                ModelState.AddModelError("", "ReCapthca failed");
+            }
+
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
@@ -117,7 +129,7 @@ namespace MineBidz.Controllers
                     if (model.PaymentTypeId.HasValue)
                     {
                         string paymentType;
-                        switch(model.PaymentTypeId.Value)
+                        switch (model.PaymentTypeId.Value)
                         {
                             case 1:
                                 paymentType = "Pay Pal";
@@ -482,4 +494,5 @@ namespace MineBidz.Controllers
         }
         #endregion
     }
+
 }

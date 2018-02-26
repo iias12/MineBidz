@@ -6,6 +6,11 @@ using System.Web;
 
 namespace MineBidz.Models
 {
+    public class RequestInfoFilteredListViewModel
+    {
+        public List<RequestInfoListViewModel> RequestInfoList { get; set; }
+        public RequestInfoFilters Filters { get; set; }
+    }
     public class RequestInfoListViewModel
     {
         public int RequestInfoId { get; set; }
@@ -24,5 +29,16 @@ namespace MineBidz.Models
         public string DocumentInfo { get; set; }
         public bool Approved { get; set; }
         public bool VendorCanContact { get; set; }
+    }
+
+    public class RequestInfoFilters
+    {
+        public int CategoryId { get; set; }
+        public System.Web.Mvc.SelectList Categories { get; set; }
+        public string CountryCode { get; set; }
+        public System.Web.Mvc.SelectList Countries { get; set; }
+        public string StateProvinceCode { get; set; }
+        public System.Web.Mvc.SelectList StatesProvinces { get; set; }
+        public string Title { get; set; }
     }
 }

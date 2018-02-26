@@ -1,11 +1,23 @@
-﻿@model List<MineBidz.Models.RequestInfoListViewModel>
+﻿@model MineBidz.Models.RequestInfoFilteredListViewModel
 
 @{
     ViewBag.Title = "Mine Vendors - The mining industry's marketplace";
 }
 
-<img class="w3-hide-small w3-hide-medium" style="width:100%; margin-bottom:-6px" src = "@Url.Content("../Images/banner.jpg")"/>
-<img class="w3-hide-small w3-hide-medium" style="width:100%" src = "@Url.Content("../Images/banner-footer.png")"/>
+<img class="w3-hide-small w3-hide-medium" style="width:100%; margin-bottom:-1px" src = "@Url.Content("../Images/banner.jpg")"/>
+<div class="w3-container"  style="padding-left: 18%; padding-top:5px; background-color:#E5A821">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div style="float: left">@Html.DropDownListFor(m => m.Filters.CategoryId, Model.Filters.Categories, new { id = "ddlCategory", @style = "width:190px; margin-left:5px; " })</div>
+        <div style="float: left">@Html.DropDownListFor(m => m.Filters.CountryCode, Model.Filters.Countries, "-COUNTRY-", new { id = "ddlCountries", style = "width:190px; margin-left:5px;" })</div>
+        <div style="float: left">@Html.DropDownListFor(m => m.Filters.StateProvinceCode, Model.Filters.StatesProvinces, "-PROVINCE/STATE-", new { id = "ddlProvinces", style = "width:190px; margin-left:5px;" })</div>
+        <div style="float: left; margin-left:5px;">Search by Title:</div>
+        <div style="float: left">@Html.TextBoxFor(m => m.Filters.Title, new { id = "txtTitle", style = "width:190px; margin-left:5px; " })</div>
+        <div style="float: right; margin-right:5px;">
+            <input type="image" src="~/Images/Layout/MagGlass.png"  style="height:25px; width:25px; cursor:pointer; border:none"/>
+        </div>
+    }
+</div>
 <div class="w3-main w3-row">
     <div class="w3-col m2 l2 w3-hide-medium w3-hide-small">
         <div id="ad-left" class="w3-hide-medium, w3-hide-small" style='width: 68%; float: right; background: url(@Url.Content("~/Images/Layout/side-ad-left-empty.png"))'>
@@ -41,7 +53,7 @@
                         <th>Ends</th>
                     </tr>
                 </thead>
-                @foreach (MineBidz.Models.RequestInfoListViewModel f in Model)
+                @foreach (MineBidz.Models.RequestInfoListViewModel f in Model.RequestInfoList)
                 {
                     <tr class="w3-hover-black" style="cursor:pointer" onclick="redirect(@f.RequestInfoId)">
                         <td>
@@ -104,13 +116,64 @@
         <img style="width: 32%; margin-top: 10px;" src="/Images/Ad/solomon-resources-1.jpg"></a>
 </div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 
+    <script type="text/javascript">
+        $("document").ready(
+            function () {
+                addressDropdowns($("#ddlCountries"), $("#ddlProvinces"));
+                $("#ddlCategory").attr('data-val', false);
+            }
+        );
 
-<script type="text/javascript">
+        function addressDropdowns(ddlCountries, ddlStates) {
+            ddlCountries.change(function () {
+                var provTitile = '-PROVINCE/STATE-';
+                var selectedCountryCode = $(this).val();
+                if (!selectedCountryCode) {
+                    ddlStates.empty();
+                    ddlStates.append(
+                            $('<option/>')
+                                    .attr('value', '')
+                                    .text(provTitile));
+                    return;
+                }
+                $.getJSON('@Url.Action("ProvincesStates", "Forms")', { countryCode: selectedCountryCode }, function (provinces) {
+                    ddlStates.empty();
+                    if (provinces.length > 0) {
+                        ddlStates.append(
+                            $('<option/>')
+                                    .attr('value', '')
+                                    .text(provTitile)
+                        );
+                    }
+                    else {
+                        ddlStates.append(
+                            $('<option/>')
+                                    .attr('value', '')
+                                    .text('N/A')
+                        );
+                    }
+                    $.each(provinces, function (index, province) {
+                        ddlStates.append(
+                                $('<option/>')
+                                    .attr('value', province.ProvinceStateCode)
+                                    .text(province.ProvinceStateName)
+                        );
+                    });
+                });
+            });
+        }
+
     function redirect(id) {
         var url = '@Url.Action("Display", "Forms", new { formId = "__id__" })';
         window.location.href = url.replace('__id__', id);
     }
-</script>
+
+    </script>
+}
+
+
 
 

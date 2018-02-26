@@ -75,6 +75,8 @@
     <Compile Include="PackageType.cs" />
     <Compile Include="ProvinceState.cs" />
     <Compile Include="Concrete\Pump.cs" />
+    <Compile Include="ReCaptchaResponse.cs" />
+    <Compile Include="RequestInfoFilter.cs" />
     <Compile Include="Subcategory.cs" />
     <Compile Include="RequestForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

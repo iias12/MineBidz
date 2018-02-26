@@ -126,10 +126,12 @@ namespace Domain
         }
 
 
-        public IEnumerable<RequestInfo> ListRequestInfo()
+        public IEnumerable<RequestInfo> ListRequestInfo(RequestInfoFilter filter)
         {
             List<Condition> conditionList = ListCondition().ToList();
             List<RequestInfo> list = new List<RequestInfo>();
+            string whereClause = String.Empty;
+
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 SqlCommand command = connection.CreateCommand();
@@ -138,9 +140,9 @@ namespace Domain
                       ,[UserId]
                       ,[details_info]
                       ,[approved]
-                        ,[class_name]
-                        ,[category_id]
-                        ,[subcategory_id]
+                      ,[class_name]
+                      ,[category_id]
+                      ,[subcategory_id]
       
                       ,company.[company_name]
                       ,company.[contact_name]
@@ -176,6 +178,29 @@ namespace Domain
                   INNER JOIN 
                   bid_info bi ON bi.bid_info_id = ri.bid_info_id
                   WHERE approved = 1 AND [bid_end] > GETDATE() AND deleted=0";
+                if (filter.CategoryId != 0)
+                {
+                    SqlParameter category_id = new SqlParameter("@category_id", filter.CategoryId); command.Parameters.Add(category_id);
+                    whereClause += " AND category_id = @category_id";
+                }
+                if(filter.CountryCode != null && !String.IsNullOrWhiteSpace(filter.CountryCode))
+                {
+                    SqlParameter country_code = new SqlParameter("@country_code", filter.CountryCode); command.Parameters.Add(country_code);
+                    whereClause += " AND delivery.country_code = @country_code";
+                }
+                if (filter.StateProvinceCode != null && !String.IsNullOrWhiteSpace(filter.StateProvinceCode))
+                {
+                    SqlParameter state_province_code = new SqlParameter("@state_province_code", filter.StateProvinceCode); command.Parameters.Add(state_province_code);
+                    whereClause += " AND delivery.state_province_code = @state_province_code";
+                }
+
+                if (filter.Title != null && !String.IsNullOrWhiteSpace(filter.Title))
+                {
+                    SqlParameter bid_name = new SqlParameter("@bid_name", "%"+filter.Title+"%"); command.Parameters.Add(bid_name);
+                    whereClause += " AND bi.bid_name like @bid_name";
+                }
+
+                command.CommandText += whereClause;
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -245,7 +270,10 @@ namespace Domain
                 {
                     int request_info_id = reader.GetInt32(0);
                     int s_condition_id = reader.GetInt32(1);
-                    list.FirstOrDefault(r => r.Id == request_info_id).ConditionList.Add(conditionList.FirstOrDefault(c => c.Id == s_condition_id));
+                    var request = list.FirstOrDefault(r => r.Id == request_info_id);
+                    if(request != null){
+                        request.ConditionList.Add(conditionList.FirstOrDefault(c => c.Id == s_condition_id));
+                    }
                 }
 
             }

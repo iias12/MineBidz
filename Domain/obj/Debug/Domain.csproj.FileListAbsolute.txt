@@ -7,4 +7,3 @@ C:\GIT\MineBidz\Domain\bin\Debug\Domain.dll
 C:\GIT\MineBidz\Domain\bin\Debug\Domain.pdb
 C:\GIT\MineBidz\Domain\obj\Debug\Domain.dll
 C:\GIT\MineBidz\Domain\obj\Debug\Domain.pdb
-C:\GIT\MineBidz\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache

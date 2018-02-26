@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using MineBidz.Utility;
 using System.IO;
+using Json;
 
 namespace MineBidz.Controllers
 {
@@ -55,7 +56,6 @@ namespace MineBidz.Controllers
                 Amount = 19.95M
             };
 
-
             model.CompanyInfo = new ContactInfo();
             ViewBag.Message = null;
 
@@ -66,10 +66,21 @@ namespace MineBidz.Controllers
         public ActionResult Create(CreateBidGuestViewModel model)
         {
 
+            var reCaptchaResponse = Utilities.RecaptchaVerificationString(Request.Form["g-recaptcha-response"]);
+            var captchaResult = JsonParser.Deserialize<ReCaptchaResponse>(reCaptchaResponse);
+
+            if (!captchaResult.Success)
+            {
+                ModelState.AddModelError("", "ReCapthca failed");
+            }
+
             if (!model.Acknowledged)
             {
                 ModelState.AddModelError("", "You must agree with terms and conditions");
+            }
 
+            if (!ModelState.IsValid)
+            {
                 RequestInfo request = repository.GetRequestInfo(model.RequestInfo.RequestInfoId);
                 IEnumerable<Country> countryList = repository.ListCountries();
                 IEnumerable<ProvinceState> provinceList = repository.ListProvincesStates();
@@ -79,9 +90,12 @@ namespace MineBidz.Controllers
 
                 var countries = repository.ListCountries();
                 var provinces = new List<ProvinceState>();
+                var currentYear = DateTime.Now.Year;
 
                 ViewBag.Countries = new SelectList(countries, "CountryCode", "CountryName");
                 ViewBag.Provinces = new SelectList(provinces, "ProvinceStateCode", "ProvinceStateName");
+                ViewBag.Months = new SelectList(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 });
+                ViewBag.Years = new SelectList(new List<int> { currentYear, currentYear + 1, currentYear + 2, currentYear + 3, currentYear + 4, currentYear + 5, currentYear + 6 });
 
                 model.RequestInfo = new RequestInfoListViewModel()
                 {
@@ -151,7 +165,7 @@ namespace MineBidz.Controllers
                     }
                     else
                     {
-                        body += "<a href=\"" + String.Format("http://minebidz.com/Documents/{0}", fileName) + "\"  target=\"_blank\">Bid Document</a>";
+                        body += "<a href=\"" + String.Format("http://minevendors.iias.com/Documents/{0}", fileName) + "\"  target=\"_blank\">Bid Document</a>";
                     }
                     body += " bidder e-mail " + model.CompanyInfo.Email;
                     try
